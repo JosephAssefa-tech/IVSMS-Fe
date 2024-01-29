@@ -25,7 +25,7 @@ import { DeleteConfirmationDeialogComponent } from '../components/modal/delete-c
 import { MatDialogModule } from '@angular/material/dialog';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-
+import { MatGridListModule } from '@angular/material/grid-list';
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
@@ -58,6 +58,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ReactiveFormsModule,
     MatTableModule,
     MatSnackBarModule,
+    MatGridListModule,
     HttpClientModule,
     TranslateModule.forRoot({
       loader: {

@@ -41,41 +41,17 @@ export class AppComponent {
   title = 'vechile-mgt-mui';
   displayedColumns: string[] = ['id', 'model', 'width','length','height','axleDistance','numberOfAxle','engineCapacity','numberOfCylinder','horsePower','grossWeight','netWeight','cargoCapacity','typeOfDrive','numberOfTyreF','numberOfTyreB','actions']; // Add your columns
   dataSource = new MatTableDataSource<any>();
-
+  showTable: boolean = false;
 
   constructor(private translateService: TranslateService,private dialog: MatDialog, private snackBar: MatSnackBar, private factoryService:FactoryService,private formBuilder: FormBuilder, private vechileModelService: VechileModelService)
   {
     this.selectedLanguage = translateService.currentLang;
   
   }
-  ngOnInit(): void {
-    this.loadFactories();
-    this.loadVechileMOdels();
+  ngOnInit(){}
 
-    this.myGroup = this.formBuilder.group({
-      model: ['', Validators.required], // Example with required validation
-      width: ['', Validators.required],
-      length:['', Validators.required],
-      height:['', Validators.required],
-      engineCapacity:['', Validators.required],
-      numberOfCylinder:['', Validators.required],
-      horsePower:['', Validators.required],
-      grossWeight:['', Validators.required],
-      netWeight:['', Validators.required],
-      cargoCapacity:['', Validators.required],
-      numberOfSeat:['', Validators.required],
-      fuelType:['', Validators.required],
-      factoryId:['', Validators.required],
-      axleDistance:['', Validators.required],
-      numberOfAxle:['', Validators.required],
-      typeOfDrive:['', Validators.required],
-      tyreSizeF:['', Validators.required],
-      tyreSizeB:['', Validators.required],
-      numberOfTyreF:['', Validators.required],
-      numberOfTyreB:['', Validators.required],
-      // Add more form controls as needed
-    });
-
+toggleTableVisibility() {
+  this.showTable = !this.showTable;
 }
 changeLanguage() {
   this.translateService.use(this.selectedLanguage);
@@ -170,6 +146,7 @@ formReset()
 {
   this.myGroup.reset();
 }
+
 saveVechileModel() {
   if (this.myGroup.valid) {
     // Get the form values
