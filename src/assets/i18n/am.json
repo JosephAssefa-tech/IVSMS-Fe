@@ -1,0 +1,29 @@
+
+{
+    "id":"ተራ",
+    "Model": "ሞዴል",
+    "Width": "ስፋት",
+    "Length": "ርዝመት",
+    "Height": "ቁመት",
+    "Engine Capacity": "የሞተር አቅም",
+    "Cylinder number": "የሲሊንደር ብዛት",
+    "Horse power": "የፈረስ ጉልበት",
+    "Gross Weight": "ጠቅላላ ክብደት",
+    "Net Weight": "ነጠላ ክብደት",
+    "Cargo Capacity":"የጭነት መጠን",
+    "People Capacity":"ሰው የመጫን አቅም",
+    "Fuel type":"የነዳጅ አይነት",
+    "Factory":"ፋብሪካ",
+    "Axle Distance":"የአክስል አርቀት",
+    "Axle Number":"የአክስል ብዛት",
+    "Type of drive":"የአነዳድ አየነት",
+    "Type of Tyre(F)":"የፊት ጎማ አይነት",
+    "Type of Tyre(B)":"የዋላ ጎማ አይነት",
+    "Number of Tyre(F)":"የፊት ጎማ ብዛት",
+    "Number of Tyre(B)":"የዋላ ጎማ ብዛት",
+    "actions":"ድርጊቶች",
+    "Edit":"አድስ",
+    "Delete":"ሰርዝ"
+
+  }
+  

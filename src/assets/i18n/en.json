@@ -1,0 +1,29 @@
+
+{
+    "id":"id",
+    "Model": "Model",
+    "Width": "Width",
+    "Length": "Length",
+    "Height": "Height",
+    "Engine Capacity": "Engine Capacity",
+    "Cylinder number": "Cylinder number",
+    "Horse power": "Horse power",
+    "Gross Weight": "Gross Weight",
+    "Net Weight": "Net Weight",
+    "Cargo Capacity":"Cargo Capacity",
+    "People Capacity":"People Capacity",
+    "Fuel type":"Fuel type",
+    "Factory":"Factory",
+    "Axle Distance":"Axle Distance",
+    "Axle Number":"Axle Number",
+    "Type of drive":"Type of drive",
+    "Type of Tyre(F)":"Type of Tyre(F)",
+    "Type of Tyre(B)":"Type of Tyre(B)",
+    "Number of Tyre(F)":"Number of Tyre(F)",
+    "Number of Tyre(B)":"Number of Tyre(B)",
+    "actions":"actions",
+    "Edit":"Edit",
+    "Delete":"Delete"
+
+  }
+  

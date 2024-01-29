@@ -1,0 +1,311 @@
+<mat-toolbar>
+    <button mat-icon-button class="example-icon" >
+      <mat-icon>menu</mat-icon>
+    </button>
+  
+
+
+    <section >
+
+        <div class="flex space-x-4">
+          <button mat-raised-button (click)="formReset()">New</button>
+          <button mat-raised-button color="primary"  [disabled]="!myGroup.valid" (click)="saveVechileModel()">Save</button>
+         
+          <button mat-raised-button color="warn" disabled>Print</button>
+          <button mat-raised-button disabled>Close</button>
+
+        </div>
+   </section>
+
+   <div>
+    <label for="languageSelect">Language:</label>
+    <select id="languageSelect" [(ngModel)]="selectedLanguage" (change)="changeLanguage()">
+      <option *ngFor="let lang of supportedLanguages" [value]="lang.code">{{ lang.name }}</option>
+    </select>
+    
+  </div>
+
+  </mat-toolbar>
+  <div class="pb-2">
+      <mat-divider>       
+      </mat-divider>
+</div>
+
+<mat-card>
+  <mat-card-content>
+<form [formGroup]="myGroup">
+
+    <div class="section1">
+      <div>
+        <mat-label>{{ 'Model' | translate }} <span class="required-field">*</span></mat-label><br/>
+        <mat-form-field appearance="outline">
+          <input matInput placeholder="MITICA-DIECAST" formControlName="model">
+          <mat-error *ngIf="myGroup.get('model')?.hasError('required')">Car Model is required</mat-error>
+        </mat-form-field>
+      </div>
+      
+    <div><mat-label>{{'Width' | translate }}<span class="required-field">*</span></mat-label><br/>
+      <mat-form-field appearance="outline">  
+        <input matInput placeholder="width of car" formControlName="width">
+        <mat-error *ngIf="myGroup.get('width')?.hasError('required')">Width is required</mat-error>            
+      </mat-form-field>
+    </div>
+    <div><mat-label>{{'Length' | translate }}<span class="required-field">*</span></mat-label><br/>
+      <mat-form-field appearance="outline">
+        <mat-error *ngIf="myGroup.get('length')?.hasError('required')">Length is required</mat-error>            
+        <input matInput placeholder="length of car" formControlName="length"> 
+      </mat-form-field>
+    </div>
+    <div><mat-label>{{ 'Height' | translate }}<span class="required-field">*</span></mat-label><br/>
+      <mat-form-field appearance="outline">
+     
+        <input matInput placeholder="Placeholder" formControlName="height">
+        <mat-error *ngIf="myGroup.get('length')?.hasError('required')">Length is required</mat-error>            
+       
+  
+      </mat-form-field>
+    </div>
+    <div><mat-label>{{'Engine Capacity'| translate }}<span class="required-field">*</span></mat-label><br/>
+      <mat-form-field appearance="outline">
+     
+        <mat-error *ngIf="myGroup.get('engineCapacity')?.hasError('required')">Length is required</mat-error>            
+       
+        <input matInput placeholder="Placeholder" formControlName="engineCapacity">
+       
+    
+      </mat-form-field>
+    </div>
+    <div><mat-label>{{'Cylinder number' | translate }}<span class="required-field">*</span></mat-label><br/>
+      <mat-form-field appearance="outline">
+        <mat-error *ngIf="myGroup.get('numberOfCylinder')?.hasError('required')">Length is required</mat-error>            
+       
+    
+        <input matInput placeholder="Placeholder" formControlName="numberOfCylinder">   
+        
+      </mat-form-field>
+    </div>
+  </div>
+    <div class="section2">
+      <div><mat-label>{{'Horse power'| translate }}<span class="required-field">*</span></mat-label><br/>
+      <mat-form-field appearance="outline">
+     
+        <input matInput placeholder="Placeholder" formControlName="horsePower">
+        <mat-error *ngIf="myGroup.get('horsePower')?.hasError('required')">horse Power is required</mat-error>            
+       
+      </mat-form-field>
+    </div>
+    <div><mat-label>{{'Gross Weight'| translate }}<span class="required-field">*</span></mat-label><br/>
+      <mat-form-field appearance="outline">
+    
+        <input matInput placeholder="Placeholder" formControlName="grossWeight">
+        <mat-error *ngIf="myGroup.get('grossWeight')?.hasError('required')">gross Weight Power is required</mat-error>            
+       
+   
+      </mat-form-field>
+    </div>
+    <div><mat-label>{{'Net Weight'| translate }}<span class="required-field">*</span></mat-label><br/>
+      <mat-form-field appearance="outline">
+    
+        <input matInput placeholder="Placeholder" formControlName="netWeight">
+        <mat-error *ngIf="myGroup.get('netWeight')?.hasError('required')">net Weight Weight Power is required</mat-error>            
+       
+       
+      </mat-form-field>
+    </div>
+    <div><mat-label>{{'Cargo Capacity'| translate }}<span class="required-field">*</span></mat-label><br/>
+      <mat-form-field appearance="outline">
+     
+        <input matInput placeholder="Placeholder" formControlName="cargoCapacity">
+        <mat-error *ngIf="myGroup.get('cargoCapacity')?.hasError('required')">cargo Capacity  Power is required</mat-error>            
+     
+     
+      </mat-form-field>
+    </div>
+    <div><mat-label>{{'People Capacity'| translate }}<span class="required-field">*</span></mat-label><br/>
+      <mat-form-field appearance="outline">
+        <mat-error *ngIf="myGroup.get('numberOfSeat')?.hasError('required')">numberOfSeat is required</mat-error>            
+     
+    
+        <input matInput placeholder="Placeholder" formControlName="numberOfSeat">
+    
+    
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-label>{{'Fuel type'| translate }}<span class="required-field">*</span></mat-label><br/>
+      <mat-form-field>
+        <mat-label>Select</mat-label>
+        <mat-select formControlName="fuelType">
+          <mat-option [value]="fuelTypes.Gasoline">Gasoline</mat-option>
+          <mat-option [value]="fuelTypes.DieselFuel">DieselFuel</mat-option>
+          <mat-option [value]="fuelTypes.NoFuel">NoFuel</mat-option>
+          <mat-option [value]="fuelTypes.ElectricCharge">ElectricCharge</mat-option>
+        </mat-select>
+        <mat-error *ngIf="myGroup.get('fuelType')?.hasError('required')">fuelType is required</mat-error>
+      </mat-form-field>
+    </div>
+    
+    <div><mat-label>{{'Factory'| translate }}<span class="required-field">*</span></mat-label><br/>
+      <mat-form-field>
+        <mat-label>Select</mat-label>
+        <mat-select formControlName="factoryId">
+          <mat-option *ngFor="let factory of factories" [value]="factory.id">{{ factory.factoryName }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    
+    </div>
+    <div class="section3">
+      <div><mat-label>{{'Axle Distance'| translate }}<span class="required-field">*</span></mat-label><br/>
+      <mat-form-field appearance="outline">
+     
+        <input matInput placeholder="Placeholder" formControlName="axleDistance">
+        <mat-error *ngIf="myGroup.get('axleDistance')?.hasError('required')">axleDistance is required</mat-error>            
+      
+      </mat-form-field>
+    </div>
+    <div><mat-label>{{'Axle Number'| translate }}<span class="required-field">*</span></mat-label><br/>
+      <mat-form-field appearance="outline">
+    
+        <input matInput placeholder="Placeholder"  formControlName="numberOfAxle">
+        <mat-error *ngIf="myGroup.get('numberOfAxle')?.hasError('required')">numberOfAxle is required</mat-error>            
+      
+        <mat-hint>Width<span class="required-field">*</span></mat-hint>
+      </mat-form-field>
+    </div>
+    <div><mat-label>{{'Type of drive'| translate }}<span class="required-field">*</span></mat-label><br/>
+      <mat-form-field appearance="outline">
+    
+        <input matInput placeholder="Placeholder" formControlName="typeOfDrive">
+        <mat-error *ngIf="myGroup.get('typeOfDrive')?.hasError('required')">typeOfDrive is required</mat-error>            
+      
+      
+      </mat-form-field>
+    </div>
+    <div><mat-label>{{'Type of Tyre(F)'| translate }}<span class="required-field">*</span></mat-label><br/>
+      <mat-form-field appearance="outline">
+        <mat-error *ngIf="myGroup.get('tyreSizeF')?.hasError('required')">tyreSizeF is required</mat-error>            
+      
+        <input matInput placeholder="Placeholder" formControlName="tyreSizeF" > 
+      </mat-form-field>
+    </div>
+    <div><mat-label>{{'Type of Tyre(B)'| translate }}<span class="required-field">*</span></mat-label><br/>
+      <mat-form-field appearance="outline"> 
+        <mat-error *ngIf="myGroup.get('tyreSizeB')?.hasError('required')">tyreSizeB is required</mat-error>            
+      
+        <input matInput placeholder="Placeholder" formControlName="tyreSizeB" >    
+      </mat-form-field>
+    </div>
+
+
+    <div><mat-label>{{'Number of Tyre(F)'| translate }}<span class="required-field">*</span></mat-label><br/>
+ 
+        <mat-form-field appearance="outline">  
+          <mat-error *ngIf="myGroup.get('numberOfTyreF')?.hasError('required')">number Of TyreF is required</mat-error>            
+             
+          <input matInput placeholder="Placeholder" formControlName="numberOfTyreF">      
+        </mat-form-field></div>   
+        <div><mat-label>{{'Number of Tyre(B)'| translate }}<span class="required-field">*</span></mat-label><br/>
+          <mat-form-field appearance="outline">      
+            <mat-error *ngIf="myGroup.get('numberOfTyreB')?.hasError('required')">numberOfTyreB is required</mat-error>            
+               
+            <input matInput placeholder="Placeholder" formControlName="numberOfTyreB">      
+          </mat-form-field></div>
+ 
+    </div>
+  </form>
+  </mat-card-content>
+</mat-card>
+
+<div class="mat-elevation-z8">
+  <mat-table [dataSource]="dataSource">
+
+    <!-- Add columns here based on your data structure -->
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef>{{'id'| translate }} </mat-header-cell>
+      <mat-cell *matCellDef="let data; let i = index">{{ i + 1 }}</mat-cell>
+    </ng-container>
+    
+
+    <ng-container matColumnDef="model">
+      <mat-header-cell *matHeaderCellDef>{{'Model'| translate }}</mat-header-cell>
+      <mat-cell *matCellDef="let data">{{ data.model }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="width">
+      <mat-header-cell *matHeaderCellDef>{{'Width'| translate }}</mat-header-cell>
+      <mat-cell *matCellDef="let data">{{ data.width }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="length">
+      <mat-header-cell *matHeaderCellDef>{{'Length'| translate }}</mat-header-cell>
+      <mat-cell *matCellDef="let data">{{ data.length }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="height">
+      <mat-header-cell *matHeaderCellDef>{{'Height'| translate }}</mat-header-cell>
+      <mat-cell *matCellDef="let data">{{ data.height }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="axleDistance">
+      <mat-header-cell *matHeaderCellDef>{{'Axle Distance'| translate }}</mat-header-cell>
+      <mat-cell *matCellDef="let data">{{ data.axleDistance }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="numberOfAxle">
+      <mat-header-cell *matHeaderCellDef>{{'Axle Number'| translate }}</mat-header-cell>
+      <mat-cell *matCellDef="let data">{{ data.numberOfAxle }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="engineCapacity">
+      <mat-header-cell *matHeaderCellDef>{{'Engine Capacity'| translate }}</mat-header-cell>
+      <mat-cell *matCellDef="let data">{{ data.engineCapacity }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="numberOfCylinder">
+      <mat-header-cell *matHeaderCellDef>{{'Cylinder number' | translate }}</mat-header-cell>
+      <mat-cell *matCellDef="let data">{{ data.numberOfCylinder }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="horsePower">
+      <mat-header-cell *matHeaderCellDef>{{'Horse power'| translate }}</mat-header-cell>
+      <mat-cell *matCellDef="let data">{{ data.horsePower }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="grossWeight">
+      <mat-header-cell *matHeaderCellDef>{{'Gross Weight'| translate }}</mat-header-cell>
+      <mat-cell *matCellDef="let data">{{ data.grossWeight }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="netWeight">
+      <mat-header-cell *matHeaderCellDef>{{'Net Weight'| translate }}</mat-header-cell>
+      <mat-cell *matCellDef="let data">{{ data.netWeight }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="cargoCapacity">
+      <mat-header-cell *matHeaderCellDef>{{'Cargo Capacity'| translate }}</mat-header-cell>
+      <mat-cell *matCellDef="let data">{{ data.cargoCapacity }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="typeOfDrive">
+      <mat-header-cell *matHeaderCellDef>{{'Type of drive'| translate }}</mat-header-cell>
+      <mat-cell *matCellDef="let data">{{ data.typeOfDrive }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="numberOfTyreF">
+      <mat-header-cell *matHeaderCellDef>{{'Number of Tyre(F)'| translate }}</mat-header-cell>
+      <mat-cell *matCellDef="let data">{{ data.numberOfTyreF }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="numberOfTyreB">
+      <mat-header-cell *matHeaderCellDef>{{'Number of Tyre(B)'| translate }}</mat-header-cell>
+      <mat-cell *matCellDef="let data">{{ data.numberOfTyreB }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef>{{'actions'| translate }}</mat-header-cell>
+      <mat-cell *matCellDef="let data">
+        <button mat-raised-button (click)="EditVechile()" color="primary">{{'Edit'| translate }}</button> |
+        <button mat-raised-button color="warn" (click)="openDeleteConfirmationDialog(data.id)">{{'Delete'| translate }}</button>
+  
+
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let data; columns: displayedColumns"></mat-row>
+  </mat-table>
+</div>
+
+
+
+

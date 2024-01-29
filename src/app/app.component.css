@@ -1,0 +1,13 @@
+.section1{
+  @apply flex space-x-4 mt-4;
+}
+.section2{
+  @apply flex space-x-4 mt-4;
+}
+.section3{
+  @apply flex space-x-4 mt-4;
+}
+.required-field {
+
+  @apply ml-1 text-red-600;
+}
