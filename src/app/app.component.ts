@@ -31,6 +31,7 @@ export class AppComponent {
     { code: 'am', name: 'Amharic' },
     // Add more languages as needed
   ];
+  selectedRowData: any;
 
   selectedLanguage: string ;
   factories: any[] = [];
@@ -82,8 +83,39 @@ changeLanguage() {
 switchLanguage() {
   this.translateService.use(this.translateService.currentLang === 'en' ? 'fr' : 'en');
 }
-EditVechile()
+EditVechile(rowData:any)
 {
+  this.selectedRowData = rowData;
+
+  console.log("selected row values")
+  console.log( this.selectedRowData)
+  // Set form values based on selected row data
+  this.myGroup.patchValue({
+    model: rowData.model,
+    width: rowData.width,
+    length:rowData.length,
+      height:rowData.height,
+      engineCapacity:rowData.engineCapacity,
+      numberOfCylinder:rowData.numberOfCylinder,
+      horsePower:rowData.horsePower,
+      grossWeight:rowData.grossWeight,
+      netWeight:rowData.netWeight,
+      cargoCapacity:rowData.cargoCapacity,
+      numberOfSeat:rowData.numberOfSeat,
+      fuelType:rowData.fuelType,
+      factoryId:rowData.factoryId,
+      axleDistance:rowData.axleDistance,
+      numberOfAxle:rowData.numberOfAxle,
+      typeOfDrive:rowData.typeOfDrive,
+      tyreSizeF:rowData.tyreSizeF,
+      tyreSizeB:rowData.tyreSizeB,
+      numberOfTyreF:rowData.numberOfTyreF,
+      numberOfTyreB:rowData.numberOfTyreB,
+  });
+
+  // Optionally, you can store the ID of the edited row for updating later
+ // this.editingRowId = rowData.id; // Assuming you have an 'id' property in your row data
+
 
 }
 
@@ -139,38 +171,69 @@ formReset()
   this.myGroup.reset();
 }
 saveVechileModel() {
-  // Check if the form is valid
   if (this.myGroup.valid) {
     // Get the form values
     const formData = this.myGroup.value;
 
-    // Call your service's post method to save the data
-    this.vechileModelService.post(formData).subscribe(
-      (response: any) => {
-        // Handle success, e.g., show a success notification
-        console.log('Data saved successfully:', response);
-        this.snackBar.open('Data saved successfully', 'Close', {
-          duration: 3000, // Duration in milliseconds
-        });
+    if (this.selectedRowData) {
+      // Editing an existing record
+      const editedData = { ...this.selectedRowData, ...formData };
 
-        // Update the table with the newly added record
-        this.loadVechileMOdels();
+      // Call your service's update method to update the data
+      this.vechileModelService.update(editedData ).subscribe(
+        (response: any) => {
+          // Handle success, e.g., show a success notification
+          console.log('Data updated successfully:', response);
+          this.snackBar.open('Data updated successfully', 'Close', {
+            duration: 3000, // Duration in milliseconds
+          });
 
-        this.myGroup.reset();
-      },
-      (error: any) => {
-        this.snackBar.open('Error saving data', 'Close', {
-          duration: 3000, // Duration in milliseconds
-          panelClass: ['error-snackbar'], // Add a custom CSS class for error styling (optional)
-        });
-        console.error('Save failed:', error);
-      }
-    );
+          // Update the table with the latest data
+          this.loadVechileMOdels();
+        },
+        (error: any) => {
+          this.snackBar.open('Error updating data', 'Close', {
+            duration: 3000, // Duration in milliseconds
+            panelClass: ['error-snackbar'], // Add a custom CSS class for error styling (optional)
+          });
+          console.error('Update failed:', error);
+        }
+      );
+
+      // Clear selectedRowData after updating
+      this.myGroup.reset();
+      this.selectedRowData = null;
+    } else {
+      // Adding a new record
+      // Call your service's post method to save the new data
+      this.vechileModelService.post(formData).subscribe(
+        (response: any) => {
+          // Handle success, e.g., show a success notification
+          console.log('Data saved successfully:', response);
+          this.snackBar.open('Data saved successfully', 'Close', {
+            duration: 3000, // Duration in milliseconds
+          });
+
+          // Update the table with the newly added record
+          this.loadVechileMOdels();
+
+          this.myGroup.reset();
+        },
+        (error: any) => {
+          this.snackBar.open('Error saving data', 'Close', {
+            duration: 3000, // Duration in milliseconds
+            panelClass: ['error-snackbar'], // Add a custom CSS class for error styling (optional)
+          });
+          console.error('Save failed:', error);
+        }
+      );
+    }
   } else {
     // Handle invalid form, e.g., show an error notification
     console.error('Invalid form data');
   }
 }
+
 
   
 }

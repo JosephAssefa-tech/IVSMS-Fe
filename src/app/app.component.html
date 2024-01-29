@@ -294,7 +294,7 @@
     <ng-container matColumnDef="actions">
       <mat-header-cell *matHeaderCellDef>{{'actions'| translate }}</mat-header-cell>
       <mat-cell *matCellDef="let data">
-        <button mat-raised-button (click)="EditVechile()" color="primary">{{'Edit'| translate }}</button> |
+        <button mat-raised-button (click)="EditVechile(data)" color="primary">{{'Edit'| translate }}</button> |
         <button mat-raised-button color="warn" (click)="openDeleteConfirmationDialog(data.id)">{{'Delete'| translate }}</button>
   
 
