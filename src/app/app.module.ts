@@ -16,7 +16,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { FormsModule } from '@angular/forms';
-import { MatSort } from '@angular/material/sort';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { VechileModelComponent } from '../components/vechile-model/vechile-model/vechile-model.component';
@@ -52,6 +52,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatCardModule,
     MatSortModule,
     MatPaginatorModule,
+    MatAutocompleteModule,
     FormsModule,
     MatDialogModule,
     HttpClientModule,

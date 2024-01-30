@@ -1,30 +1,36 @@
-<mat-toolbar>
+<div class="grid grid-cols-3  bg-blue-500 pt-2 ">
+ <div></div>
+  <div class="justify-items-center"><h1>{{'Model of vechile'| translate }}</h1></div>
+  <div></div>
+</div>
+<div class="grid grid-cols-3  " >
 
-
-    <button mat-icon-button class="example-icon" >
+  <!-- Left Section -->
+  <div class="flex items-center justify-start px-4">
+    <button mat-icon-button class="example-icon">
       <mat-icon>menu</mat-icon>
-    </button>
-  
-        <div class="flex space-x-4">
-          <button mat-raised-button (click)="formReset()">New</button>
-          <button mat-raised-button color="primary"  [disabled]="!myGroup.valid" (click)="saveVechileModel()">Save</button>
-         
-          <button mat-raised-button color="warn" disabled>Print</button>
-          <button mat-raised-button disabled>Close</button>
+    </button> 
+  </div>
 
-        </div>
+  <!-- Center Section -->
+  <div class="flex items-center justify-center space-x-4 px-4">
+    <button mat-raised-button (click)="formReset()">New</button>
+    <button mat-raised-button color="primary" [disabled]="!myGroup.valid" (click)="saveVechileModel()">Save</button>        
+    <button mat-raised-button color="warn" disabled>Print</button>
+    <button mat-raised-button disabled>Close</button>
+  </div>
 
-
-   <div >
-    <label for="languageSelect">Language:</label>
-    <select id="languageSelect" [(ngModel)]="selectedLanguage" (change)="changeLanguage()">
+  <!-- Right Section -->
+  <div class="flex items-center justify-end px-4">
+    <label for="languageSelect" class="mr-2">Language:</label>
+    <select id="languageSelect" [(ngModel)]="selectedLanguage" (change)="changeLanguage()" class="p-2">
       <option *ngFor="let lang of supportedLanguages" [value]="lang.code">{{ lang.name }}</option>
     </select>
     <button mat-raised-button (click)="toggleTableVisibility()">Show table</button>
-
   </div>
 
-  </mat-toolbar>
+</div>
+  
   <div class="pb-2">
       <mat-divider>       
       </mat-divider>
@@ -150,6 +156,7 @@
         <mat-select formControlName="factoryId">
           <mat-option *ngFor="let factory of factories" [value]="factory.id">{{ factory.factoryName }}</mat-option>
         </mat-select>
+        
       </mat-form-field>
       
     </div>
@@ -170,8 +177,7 @@
         <input matInput placeholder="Placeholder"  formControlName="numberOfAxle">
         <mat-error *ngIf="myGroup.get('numberOfAxle')?.hasError('required')">numberOfAxle is required</mat-error>            
       
-        <mat-hint>Width<span class="required-field">*</span></mat-hint>
-      </mat-form-field>
+             </mat-form-field>
     </div>
     <div><mat-label>{{'Type of drive'| translate }}<span class="required-field">*</span></mat-label><br/>
       <mat-form-field appearance="outline">
@@ -217,7 +223,7 @@
   </mat-card-content>
 </mat-card>
 
-<div *ngIf="showTable"  class="mat-elevation-z8">
+<div *ngIf="showTable"   >
   <mat-table [dataSource]="dataSource">
 
     <!-- Add columns here based on your data structure -->
@@ -234,21 +240,21 @@
 
     <ng-container matColumnDef="width">
       <mat-header-cell *matHeaderCellDef>{{'Width'| translate }}</mat-header-cell>
-      <mat-cell *matCellDef="let data">{{ data.width }}</mat-cell>
+      <mat-cell *matCellDef="let data">{{ data.width }}{{'m' | translate }}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="length">
       <mat-header-cell *matHeaderCellDef>{{'Length'| translate }}</mat-header-cell>
-      <mat-cell *matCellDef="let data">{{ data.length }}</mat-cell>
+      <mat-cell *matCellDef="let data">{{ data.length }}{{'m' | translate }}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="height">
       <mat-header-cell *matHeaderCellDef>{{'Height'| translate }}</mat-header-cell>
-      <mat-cell *matCellDef="let data">{{ data.height }}</mat-cell>
+      <mat-cell *matCellDef="let data">{{ data.height }}{{'m' | translate }}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="axleDistance">
       <mat-header-cell *matHeaderCellDef>{{'Axle Distance'| translate }}</mat-header-cell>
-      <mat-cell *matCellDef="let data">{{ data.axleDistance }}</mat-cell>
+      <mat-cell *matCellDef="let data">{{ data.axleDistance }}{{'m' | translate }}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="numberOfAxle">
@@ -269,11 +275,11 @@
     </ng-container>
     <ng-container matColumnDef="grossWeight">
       <mat-header-cell *matHeaderCellDef>{{'Gross Weight'| translate }}</mat-header-cell>
-      <mat-cell *matCellDef="let data">{{ data.grossWeight }}</mat-cell>
+      <mat-cell *matCellDef="let data">{{ data.grossWeight }}{{'kg' | translate }}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="netWeight">
       <mat-header-cell *matHeaderCellDef>{{'Net Weight'| translate }}</mat-header-cell>
-      <mat-cell *matCellDef="let data">{{ data.netWeight }}</mat-cell>
+      <mat-cell *matCellDef="let data">{{ data.netWeight }}{{'kg' | translate }}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="cargoCapacity">
       <mat-header-cell *matHeaderCellDef>{{'Cargo Capacity'| translate }}</mat-header-cell>
@@ -288,7 +294,10 @@
       <mat-cell *matCellDef="let data">{{ data.numberOfTyreF }}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="numberOfTyreB">
-      <mat-header-cell *matHeaderCellDef>{{'Number of Tyre(B)'| translate }}</mat-header-cell>
+   
+      <mat-header-cell  *matHeaderCellDef>{{'Number of Tyre(B)'| translate }}
+      </mat-header-cell>
+      
       <mat-cell *matCellDef="let data">{{ data.numberOfTyreB }}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="actions">
@@ -300,8 +309,16 @@
 
       </mat-cell>
     </ng-container>
-
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let data; columns: displayedColumns"></mat-row>
+   
+    <mat-header-row style="background-color: #1B7EC1; color: #ffffff;" *matHeaderRowDef="displayedColumns"  >
+    </mat-header-row>
+  
+    <mat-row  *matRowDef="let data; columns: displayedColumns" ></mat-row>
   </mat-table>
-</div>
+
+  <mat-paginator [length]="100"
+              [pageSize]="10"
+              [pageSizeOptions]="[5, 10, 25, 100]"
+              aria-label="Select page">
+</mat-paginator>
+</div>  

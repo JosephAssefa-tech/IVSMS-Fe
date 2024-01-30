@@ -37,13 +37,14 @@ export class VechileModelComponent {
 
   selectedLanguage: string ;
   factories: any[] = [];
+  
   vechileModels: any[] = [];
   myGroup!: FormGroup; // Add the definite assignment assertion here
   fuelTypes = FuelType;
   title = 'vechile-mgt-mui';
   displayedColumns: string[] = ['id', 'model', 'width','length','height','axleDistance','numberOfAxle','engineCapacity','numberOfCylinder','horsePower','grossWeight','netWeight','cargoCapacity','typeOfDrive','numberOfTyreF','numberOfTyreB','actions']; // Add your columns
   dataSource = new MatTableDataSource<any>();
-  showTable: boolean = false;
+  showTable: boolean = true;
 
   constructor(private translateService: TranslateService,private dialog: MatDialog, private snackBar: MatSnackBar, private factoryService:FactoryService,private formBuilder: FormBuilder, private vechileModelService: VechileModelService)
   {

@@ -23,7 +23,10 @@
     "Number of Tyre(B)":"Number of Tyre(B)",
     "actions":"actions",
     "Edit":"Edit",
-    "Delete":"Delete"
+    "Delete":"Delete",
+    "Model of vechile":"Model of vechile",
+    "m":"m",
+    "kg":"kg"
 
   }
   
