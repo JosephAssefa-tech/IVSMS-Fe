@@ -1,16 +1,40 @@
+.main-body{
+  @apply bg-gray-200;
+}
 .section1{
-    @apply flex space-x-4 mt-2;
+    @apply flex space-x-4 mt-1;
   }
   .section2{
-    @apply flex space-x-4 mt-2;
+    @apply flex space-x-4 mt-1;
   }
   .section3{
-    @apply flex space-x-4 mt-2;
+    @apply flex space-x-4 mt-1;
+  }
+  .section4{
+    @apply flex space-x-4 mt-1;
   }
   .required-field {
   
     @apply ml-1 text-red-600;
   }
-  .main-container{
-    @apply ml-8 mr-8;
+
+  .table-container {
+    @apply  mt-3;
+    overflow-x: auto;
   }
+  
+
+  
+  mat-header-cell,
+  mat-cell {
+    min-width: 100px; /* Set a minimum width for your cells */
+    overflow: hidden; /* Hide overflow content */
+  }
+  mat-row:hover {
+    @apply hover:bg-gray-200;
+
+  }
+
+  
+  
+  

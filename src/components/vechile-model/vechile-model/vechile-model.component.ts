@@ -4,17 +4,19 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { VechileModelService } from '../../../services/vechile-model-service/vechile-model.service';
-import { FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, NgForm, ValidatorFn, Validators } from '@angular/forms';
 import { FactoryService } from '../../../services/factory-service/factory.service';
 import { DeleteConfirmationDeialogComponent } from '../../modal/delete-confirmation-deialog/delete-confirmation-deialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
+import { Observable } from 'rxjs';
+import { startWith, map } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 interface UserData {
   name: string;
   age: number;
   city: string;
 }
+
 enum FuelType
 {
     Gasoline = 0,
@@ -35,9 +37,11 @@ export class VechileModelComponent {
   ];
   selectedRowData: any;
 
+  
   selectedLanguage: string ;
   factories: any[] = [];
-  
+  filteredFactories: Observable<any[]> | undefined;
+
   vechileModels: any[] = [];
   myGroup!: FormGroup; // Add the definite assignment assertion here
   fuelTypes = FuelType;
@@ -45,40 +49,54 @@ export class VechileModelComponent {
   displayedColumns: string[] = ['id', 'model', 'width','length','height','axleDistance','numberOfAxle','engineCapacity','numberOfCylinder','horsePower','grossWeight','netWeight','cargoCapacity','typeOfDrive','numberOfTyreF','numberOfTyreB','actions']; // Add your columns
   dataSource = new MatTableDataSource<any>();
   showTable: boolean = true;
-
+  factoryIdControl = new FormControl();
   constructor(private translateService: TranslateService,private dialog: MatDialog, private snackBar: MatSnackBar, private factoryService:FactoryService,private formBuilder: FormBuilder, private vechileModelService: VechileModelService)
   {
+    this.selectedLanguage = 'am'; // or whatever the code is for Amharic
+
     this.selectedLanguage = translateService.currentLang;
   
   }
   ngOnInit(): void {
     this.loadFactories();
     this.loadVechileMOdels();
-
+    this.filteredFactories = this.factoryIdControl.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filterFactories(value))
+    );
+ 
     this.myGroup = this.formBuilder.group({
-      model: ['', Validators.required], // Example with required validation
-      width: ['', Validators.required],
-      length:['', Validators.required],
-      height:['', Validators.required],
-      engineCapacity:['', Validators.required],
-      numberOfCylinder:['', Validators.required],
-      horsePower:['', Validators.required],
-      grossWeight:['', Validators.required],
-      netWeight:['', Validators.required],
-      cargoCapacity:['', Validators.required],
-      numberOfSeat:['', Validators.required],
+      model: ['', Validators.required], 
+      width: ['', [Validators.required, Validators.pattern(/^-?\d*\.?\d+$/)]],
+      length:['', [Validators.required, Validators.pattern(/^-?\d*\.?\d+$/)]],
+      height:['', [Validators.required, Validators.pattern(/^-?\d*\.?\d+$/)]],
+      engineCapacity:['', [Validators.required,Validators.pattern(/^-?\d*\.?\d+$/)]],
+      numberOfCylinder:['', [Validators.required, Validators.pattern(/^-?\d*\.?\d+$/)]],
+      horsePower:['', [Validators.required, Validators.pattern(/^-?\d*\.?\d+$/)]],
+      grossWeight:['', [Validators.required, Validators.pattern(/^-?\d*\.?\d+$/)]],
+      netWeight:['', [Validators.required, Validators.pattern(/^-?\d*\.?\d+$/)]],
+      cargoCapacity:['', [Validators.required, Validators.pattern(/^-?\d*\.?\d+$/)]],
+      numberOfSeat:['', [Validators.required, Validators.pattern(/^-?\d*\.?\d+$/)]],
       fuelType:['', Validators.required],
       factoryId:['', Validators.required],
-      axleDistance:['', Validators.required],
-      numberOfAxle:['', Validators.required],
+      axleDistance:['', [Validators.required, Validators.pattern(/^-?\d*\.?\d+$/)]],
+      numberOfAxle:['', [Validators.required, Validators.pattern(/^-?\d*\.?\d+$/)]],
       typeOfDrive:['', Validators.required],
       tyreSizeF:['', Validators.required],
       tyreSizeB:['', Validators.required],
-      numberOfTyreF:['', Validators.required],
-      numberOfTyreB:['', Validators.required],
+      numberOfTyreF:['', [Validators.required, Validators.pattern(/^-?\d*\.?\d+$/)]],
+      numberOfTyreB:['', [Validators.required, Validators.pattern(/^-?\d*\.?\d+$/)]]
       // Add more form controls as needed
     });
 
+}
+private _filterFactories(value: string): any[] {
+  const filterValue = value.toLowerCase();
+  return this.factories.filter(factory => factory.factoryName.toLowerCase().includes(filterValue));
+}
+
+displayFn(factory: any): string {
+  return factory && factory.factoryName ? factory.factoryName : '';
 }
 toggleTableVisibility() {
   this.showTable = !this.showTable;

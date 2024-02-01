@@ -26,6 +26,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { MatGridListModule } from '@angular/material/grid-list';
+
+
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
@@ -46,6 +48,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatIconModule,
     MatButtonModule,
     MatDividerModule,
+    MatAutocompleteModule,
     MatSelectModule,
     MatInputModule,
     MatFormFieldModule,

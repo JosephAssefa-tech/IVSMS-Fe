@@ -24,9 +24,12 @@
     "actions":"ድርጊቶች",
     "Edit":"አድስ",
     "Delete":"ሰርዝ",
-    "Model of vechile":"የተሽከርካሪ ሞዴል",
+    "Model of vehicle":"የተሽከርካሪ ሞዴል",
     "m":"ሜ",
-    "kg":"ኪግ"
+    "kg":"ኪግ",
+    "New":"አዲስ",
+    "Save":"አስቀምጥ",
+    "Print":"አትም"
     
 
   }

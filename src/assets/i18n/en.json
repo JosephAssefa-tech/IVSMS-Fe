@@ -24,9 +24,13 @@
     "actions":"actions",
     "Edit":"Edit",
     "Delete":"Delete",
-    "Model of vechile":"Model of vechile",
+    "Model of vehicle":"Model of vechile",
     "m":"m",
-    "kg":"kg"
+    "kg":"kg",
+    "New":"New",
+    "Save":"Save",
+    "Print":"Print"
+
 
   }
   
