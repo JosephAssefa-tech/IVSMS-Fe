@@ -1,17 +1,15 @@
-
-import { Component, ViewChild } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatDialog } from '@angular/material/dialog';
-import { MatPaginator } from '@angular/material/paginator';
-import { VechileModelService } from '../../../services/vechile-model-service/vechile-model.service';
-import { FormBuilder, FormControl, FormGroup, NgForm, ValidatorFn, Validators } from '@angular/forms';
-import { FactoryService } from '../../../services/factory-service/factory.service';
-import { DeleteConfirmationDeialogComponent } from '../../modal/delete-confirmation-deialog/delete-confirmation-deialog.component';
+import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Observable } from 'rxjs';
-import { startWith, map } from 'rxjs/operators';
+import { MatTableDataSource } from '@angular/material/table';
 import { TranslateService } from '@ngx-translate/core';
-import { VechileModelRegisterComponent } from '../../modal/model-registration/vechile-model-register/vechile-model-register.component';
+import { Observable, startWith, map } from 'rxjs';
+import { FactoryService } from '../../../../services/factory-service/factory.service';
+import { VechileModelService } from '../../../../services/vechile-model-service/vechile-model.service';
+import { DeleteConfirmationDeialogComponent } from '../../delete-confirmation-deialog/delete-confirmation-deialog.component';
+import { Location } from '@angular/common';
+
 interface UserData {
   name: string;
   age: number;
@@ -25,32 +23,26 @@ enum FuelType
     NoFuel = 2,
     ElectricCharge = 3
 }
-export interface VechileFilterRequest {
-  model: string;
-  fuelType: string; // Adjust the type according to your API
-  factoryId: string; // Adjust the type according to your API
-  createdFrom: Date | null;
-  createdTo: Date | null;
-}
-
 @Component({
-  selector: 'app-vechile-model',
-  templateUrl: './vechile-model.component.html',
-  styleUrl: './vechile-model.component.css'
+  selector: 'app-vechile-model-register',
+  templateUrl: './vechile-model-register.component.html',
+  styleUrl: './vechile-model-register.component.css'
 })
-export class VechileModelComponent {
+ export class VechileModelRegisterComponent {
+  @Input() rowData: any;
+  @Output() closeModal = new EventEmitter();
   supportedLanguages = [
     { code: 'en', name: 'English' },
     { code: 'am', name: 'Amharic' },
     // Add more languages as needed
   ];
   selectedRowData: any;
-  selectedLanguage = 'am'; // or whatever the code is for Amharic
 
-
+  
+  selectedLanguage: string ;
   factories: any[] = [];
   filteredFactories: Observable<any[]> | undefined;
-  isLoading: boolean = true; // Add this property
+
   vechileModels: any[] = [];
   myGroup!: FormGroup; // Add the definite assignment assertion here
   fuelTypes = FuelType;
@@ -59,24 +51,26 @@ export class VechileModelComponent {
   dataSource = new MatTableDataSource<any>();
   showTable: boolean = true;
   factoryIdControl = new FormControl();
-  date = new FormControl(new Date());
-  serializedDate = new FormControl(new Date().toISOString());
-  constructor(private translateService: TranslateService,private dialog: MatDialog, private snackBar: MatSnackBar, private factoryService:FactoryService,private formBuilder: FormBuilder, private vechileModelService: VechileModelService)
-  {
-   
+  constructor(
+    private location: Location,
+    @Inject(MAT_DIALOG_DATA) public data: { mode: 'edit' | 'save'; selectedrowData: any; id?: number } = { mode: 'edit', selectedrowData: null },
+    public dialogRef: MatDialogRef<VechileModelRegisterComponent>,
+    private translateService: TranslateService,
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar,
+    private factoryService: FactoryService,
+    private formBuilder: FormBuilder,
+    private vechileModelService: VechileModelService
+  ) {
+    this.selectedLanguage = 'am'; // or whatever the code is for Amharic
     this.selectedLanguage = translateService.currentLang;
-  
   }
+  
   ngOnInit(): void {
-    this.loadFactories();
-    this.loadVechileMOdels();
-    this.filteredFactories = this.factoryIdControl.valueChanges.pipe(
-      startWith(''),
-      map(value => this._filterFactories(value))
-    );
  
+  
     this.myGroup = this.formBuilder.group({
-      model: ['', Validators.required], 
+      model: ['', Validators.required],
       width: ['', [Validators.required, Validators.pattern(/^-?\d*\.?\d+$/)]],
       length:['', [Validators.required, Validators.pattern(/^-?\d*\.?\d+$/)]],
       height:['', [Validators.required, Validators.pattern(/^-?\d*\.?\d+$/)]],
@@ -98,52 +92,93 @@ export class VechileModelComponent {
       numberOfTyreB:['', [Validators.required, Validators.pattern(/^-?\d*\.?\d+$/)]]
       // Add more form controls as needed
     });
+   // this.loadVechileMOdels();
+    this.filteredFactories = this.factoryIdControl.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filterFactories(value))
+    );
+ 
+      // Set form values for editing
+      this.setFormValues();
+ 
+      this.loadFactories();
+      if (this.data.mode === 'edit') {
+        console.log(this.data.mode)
+         } else {
+           // Initialize the form with default values or empty data
+           console.log(this.data.mode)
+         }
 
+         console.log("idd of the roww is below")
+        // Access the id property if available
+console.log(this.data.id);
+
+}
+getButtonLabel(): string {
+  return this.data.mode === 'edit' ? this.vechileModelService.getEditLabel() : this.vechileModelService.getSaveLabel();
+}
+private setFormValues(): void {
+  // Set form values based on the data for editing
+  if (this.data && this.data.selectedrowData) {
+   
+    const rowData = this.data.selectedrowData;
+    console.log( rowData.fuelType)
+    this.myGroup.setValue({
+      model: rowData.model || '',
+      width: rowData.width || '',
+      length: rowData.length || '',
+      height: rowData.height || '',
+      engineCapacity:rowData.engineCapacity || '',
+      numberOfCylinder:rowData.numberOfCylinder || '',
+      horsePower:rowData.horsePower || '',
+      grossWeight:rowData.grossWeight || '',
+      netWeight:rowData.netWeight || '',
+      cargoCapacity:rowData.cargoCapacity || '',
+      numberOfSeat:rowData.numberOfSeat || '',
+      fuelType:rowData.fuelType || '',
+      factoryId:rowData.factoryId || '',
+      axleDistance:rowData.axleDistance || '',
+      numberOfAxle:rowData.numberOfAxle || '',
+      typeOfDrive:rowData.typeOfDrive || '',
+      tyreSizeF:rowData.tyreSizeF || '',
+      tyreSizeB:rowData.tyreSizeB || '',
+      numberOfTyreF:rowData.numberOfTyreF || '',
+      numberOfTyreB:rowData.numberOfTyreB || '',
+
+    });
+  }
 }
 private _filterFactories(value: string): any[] {
   const filterValue = value.toLowerCase();
   return this.factories.filter(factory => factory.factoryName.toLowerCase().includes(filterValue));
 }
-onSubmit() {
-  const filterRequest: VechileFilterRequest = {
-    model: this.myGroup.get('model')?.value ?? '',
-    fuelType: this.myGroup.get('fuelType')?.value ?? '',
-    factoryId: this.myGroup.get('factoryId')?.value ?? '',
-    createdFrom: this.myGroup.get('createdFrom')?.value ?? '',
-    createdTo: this.myGroup.get('createdTo')?.value ?? '',
-    
-  };
-
-  this.vechileModelService.filterVechiles(filterRequest).subscribe(response => {
-    console.log("filter responseee");
-    console.log(response);
-  
-    if (response && response.data) {
-      // Convert the single object into an array
-      const dataArray = [response.data];
-  
-      // Update the dataSource with the new array
-      this.dataSource.data = dataArray;
-    } else {
-      // If there is no valid response or data, display an empty table
-      this.dataSource.data = [];
-    }
-  });
-  
+onNoClick(): void {
+  this.dialogRef.close(false);
 }
-
-  popup(mode: 'edit' | 'save'): void {
+  popup(): void {
     const dialogRef = this.dialog.open(VechileModelRegisterComponent, {
-      width:'auto',
-      height:'auto',
-      data: { mode },
+      width: '1200px',
+      height:'600px'
     });
   
     dialogRef.afterClosed().subscribe((result) => {
       if (result === true) {
-   
+        // User clicked on 'Yes', perform delete action
+        // this.vechileModelService.deletre(id).subscribe(
+        //   (response) => {
+        //     console.error('Deleted successfully');
+  
+        //     // Update dataSource by removing the deleted item
+        //     this.dataSource.data = this.dataSource.data.filter(
+        //       (item) => item.id !== id
+        //     );
+        //   },
+        //   (error) => {
+        //     console.error('Error deleting:', error);
+        //   }
+        // );
       }
-   
+      // Handle 'No' or close actions if needed
     });
   }
 
@@ -159,47 +194,41 @@ changeLanguage() {
 switchLanguage() {
   this.translateService.use(this.translateService.currentLang === 'en' ? 'fr' : 'en');
 }
-EditVechile(selectedrowData: any, mode: 'edit' | 'save' = 'edit') {
-  const dialogRef = this.dialog.open(VechileModelRegisterComponent, {
-    width:'auto',
-    data: { mode, selectedrowData ,id: selectedrowData.id},
+EditVechile(rowData:any)
+{
+  this.selectedRowData = rowData;
+
+  console.log("selected row values")
+  console.log( this.selectedRowData.factoryId,)
+  // Set form values based on selected row data
+  this.myGroup.patchValue({
+    model: rowData.model,
+    width: rowData.width,
+    length:rowData.length,
+      height:rowData.height,
+      engineCapacity:rowData.engineCapacity,
+      numberOfCylinder:rowData.numberOfCylinder,
+      horsePower:rowData.horsePower,
+      grossWeight:rowData.grossWeight,
+      netWeight:rowData.netWeight,
+      cargoCapacity:rowData.cargoCapacity,
+      numberOfSeat:rowData.numberOfSeat,
+      fuelType:rowData.fuelType,
+      factoryId:rowData.factoryId,
+      axleDistance:rowData.axleDistance,
+      numberOfAxle:rowData.numberOfAxle,
+      typeOfDrive:rowData.typeOfDrive,
+      tyreSizeF:rowData.tyreSizeF,
+      tyreSizeB:rowData.tyreSizeB,
+      numberOfTyreF:rowData.numberOfTyreF,
+      numberOfTyreB:rowData.numberOfTyreB,
   });
 
-  dialogRef.afterClosed().subscribe((result) => {
-    if (result === true) {
-  
-    }
+  // Optionally, you can store the ID of the edited row for updating later
+ // this.editingRowId = rowData.id; // Assuming you have an 'id' property in your row data
 
-  });
 
 }
-seFormValues(rowData:any):void{
-this.selectedRowData=rowData;
-this.myGroup.patchValue({
-  model: rowData.model,
-  width: rowData.width,
-  length:rowData.length,
-    height:rowData.height,
-    engineCapacity:rowData.engineCapacity,
-    numberOfCylinder:rowData.numberOfCylinder,
-    horsePower:rowData.horsePower,
-    grossWeight:rowData.grossWeight,
-    netWeight:rowData.netWeight,
-    cargoCapacity:rowData.cargoCapacity,
-    numberOfSeat:rowData.numberOfSeat,
-    fuelType:rowData.fuelType,
-    factoryId:rowData.factoryId,
-    axleDistance:rowData.axleDistance,
-    numberOfAxle:rowData.numberOfAxle,
-    typeOfDrive:rowData.typeOfDrive,
-    tyreSizeF:rowData.tyreSizeF,
-    tyreSizeB:rowData.tyreSizeB,
-    numberOfTyreF:rowData.numberOfTyreF,
-    numberOfTyreB:rowData.numberOfTyreB,
-});
-}
-
-
 
 openDeleteConfirmationDialog(id: number): void {
 
@@ -232,20 +261,15 @@ openDeleteConfirmationDialg(id: number): void {
   });
 }
 
-loadVechileMOdels() {
-  this.isLoading = true; // Set loading to true before making the request
+loadVechileMOdels()
+{
+ 
+    this.vechileModelService.getAll().subscribe((reponse: any) => {
+      this.dataSource.data = reponse.data;
+     console.log(this.vechileModels)
+      // Do something with the factories
+    });
 
-  this.vechileModelService.getAll().subscribe(
-    (response: any) => {
-      this.dataSource.data = response.data;
-      console.log(this.vechileModels);
-      this.isLoading = false; // Set loading to false once data is fetched
-    },
-    (error) => {
-      console.error('Error fetching data', error);
-      this.isLoading = false; // Set loading to false in case of an error
-    }
-  );
 }
 loadFactories()
 {
@@ -257,27 +281,38 @@ formReset()
 {
   this.myGroup.reset();
 }
+onAddDataSuccess() {
+  // Perform necessary logic...
 
+  // Reload the page
+  window.location.reload();
+}
 saveVechileModel() {
   if (this.myGroup.valid) {
     // Get the form values
     const formData = this.myGroup.value;
 
-    if (this.selectedRowData) {
+    if (this.data.mode === 'edit') {
+      console.log("editing");
+
+      // Include the 'id' property in the formData
+      formData.id = this.data.id;
+
       // Editing an existing record
       const editedData = { ...this.selectedRowData, ...formData };
 
       // Call your service's update method to update the data
-      this.vechileModelService.update(editedData ).subscribe(
+      this.vechileModelService.update(editedData).subscribe(
         (response: any) => {
+          //this.onAddDataSuccess();
           // Handle success, e.g., show a success notification
           console.log('Data updated successfully:', response);
           this.snackBar.open('Data updated successfully', 'Close', {
             duration: 3000, // Duration in milliseconds
           });
-
+          this.dialogRef.close(false);
           // Update the table with the latest data
-          this.loadVechileMOdels();
+         
         },
         (error: any) => {
           this.snackBar.open('Error updating data', 'Close', {
@@ -291,11 +326,13 @@ saveVechileModel() {
       // Clear selectedRowData after updating
       this.myGroup.reset();
       this.selectedRowData = null;
-    } else {
+    } else if (this.data.mode === 'save') {
+      console.log("posting");
       // Adding a new record
       // Call your service's post method to save the new data
       this.vechileModelService.post(formData).subscribe(
         (response: any) => {
+          
           // Handle success, e.g., show a success notification
           console.log('Data saved successfully:', response);
           this.snackBar.open('Data saved successfully', 'Close', {
@@ -303,7 +340,7 @@ saveVechileModel() {
           });
 
           // Update the table with the newly added record
-          this.loadVechileMOdels();
+         
 
           this.myGroup.reset();
         },
@@ -323,5 +360,7 @@ saveVechileModel() {
 }
 
 
-  
+
+     
+
 }

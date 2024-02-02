@@ -26,8 +26,10 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { MatGridListModule } from '@angular/material/grid-list';
-
-
+import { VechileModelRegisterComponent } from '../components/modal/model-registration/vechile-model-register/vechile-model-register.component';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {provideNativeDateAdapter} from '@angular/material/core';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
@@ -37,7 +39,8 @@ export function HttpLoaderFactory(http: HttpClient) {
   declarations: [
     AppComponent,
     VechileModelComponent,
-    DeleteConfirmationDeialogComponent
+    DeleteConfirmationDeialogComponent,
+    VechileModelRegisterComponent 
   ],
   imports: [
     BrowserModule,
@@ -53,6 +56,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatInputModule,
     MatFormFieldModule,
     MatCardModule,
+    MatDatepickerModule,
     MatSortModule,
     MatPaginatorModule,
     MatAutocompleteModule,
@@ -64,6 +68,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatSnackBarModule,
     MatGridListModule,
     HttpClientModule,
+    MatProgressSpinnerModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -74,7 +79,8 @@ export function HttpLoaderFactory(http: HttpClient) {
 
   ],
   providers: [
-    provideClientHydration()
+    provideClientHydration(),
+    provideNativeDateAdapter()
   ],
   bootstrap: [AppComponent]
 })

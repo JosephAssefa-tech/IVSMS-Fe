@@ -29,7 +29,11 @@
     "kg":"kg",
     "New":"New",
     "Save":"Save",
-    "Print":"Print"
+    "Print":"Print",
+    "Close":"Close",
+    "Search":"Search",
+    "Show table":"Show table",
+    "Update":"Update"
 
 
   }

@@ -8,7 +8,7 @@
   <div></div>
 </div>
 
-<div class="grid grid-cols-3  " >
+<div class="grid grid-cols-3 p-1 " >
 
   <!-- Left Section -->
   <div class="flex items-center justify-start px-4">
@@ -19,18 +19,28 @@
 
   <!-- Center Section -->
   <div class="flex items-center justify-center space-x-4 px-4">
-    <button mat-raised-button (click)="formReset()">{{'New'| translate}} </button>
-    <button mat-raised-button color="primary" [disabled]="!myGroup.valid" (click)="saveVechileModel()">{{'Save'|translate}}</button>        
+    <button mat-raised-button (click)="popup('save')">{{'New'| translate}} </button>
+    <!-- <button mat-raised-button (click)="formReset()">{{'New'| translate}} </button> -->
+    <!-- <button mat-raised-button color="primary" [disabled]="!myGroup.valid" (click)="saveVechileModel()">{{'Save'|translate}}</button>         -->
     <button mat-raised-button color="warn" disabled>{{'Print'|translate}}</button>
 
   </div>
 
-  <div class="flex items-center justify-end px-4">
-    <label for="languageSelect" class="mr-2">Language:</label>
+  <div class="flex items-center justify-end px-4 space-x-4">
+    
+    <mat-label>Language: </mat-label>
     <select id="languageSelect" [(ngModel)]="selectedLanguage" (change)="changeLanguage()" class="p-2">
       <option *ngFor="let lang of supportedLanguages" [value]="lang.code">{{ lang.name }}</option>
     </select>
-    <button mat-raised-button (click)="toggleTableVisibility()">Show table</button>
+    
+    
+    <button mat-raised-button color="primary"  (click)="saveVechileModel()">
+      {{'Import'|translate}}
+      <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="import"></mat-icon>
+
+    </button>        
+
+    <button mat-raised-button (click)="toggleTableVisibility()">{{'Show table' | translate}}</button>
   </div>
 
 </div>
@@ -40,7 +50,7 @@
       </mat-divider>
 </div>
 
-<mat-card style="margin-left:8rem; margin-right: 8rem; ">
+<!-- <mat-card style="margin-left:8rem; margin-right: 8rem; ">
   <mat-card-content>
 <form [formGroup]="myGroup">
 
@@ -248,10 +258,71 @@
       </div>
   </form>
   </mat-card-content>
-</mat-card>
+</mat-card> -->
+<form  [formGroup]="myGroup" (ngSubmit)="onSubmit()">
+<div class="section2" >
+  <div>
+    <mat-label>{{ 'Model' | translate }} <span class="required-field">*</span></mat-label><br/>
+    <mat-form-field appearance="outline">
+      <input matInput placeholder="MITICA-DIECAST" formControlName="model">
+      <mat-error *ngIf="myGroup.get('model')?.hasError('required')">Car Model is required</mat-error>
+    </mat-form-field>
+  </div>
+<div>
+  <mat-label>{{'Fuel type'| translate }}<span class="required-field">*</span></mat-label><br/>
+  <mat-form-field>
+    <mat-label>Select</mat-label>
+    <mat-select formControlName="fuelType">
+      <mat-option [value]="fuelTypes.Gasoline">Gasoline</mat-option>
+      <mat-option [value]="fuelTypes.DieselFuel">DieselFuel</mat-option>
+      <mat-option [value]="fuelTypes.NoFuel">NoFuel</mat-option>
+      <mat-option [value]="fuelTypes.ElectricCharge">ElectricCharge</mat-option>
+    </mat-select>
+    <mat-error *ngIf="myGroup.get('fuelType')?.hasError('required')">fuelType is required</mat-error>
+  </mat-form-field>
+</div>
+<div>
+  <mat-label>{{'Factory'| translate }}<span class="required-field">*</span></mat-label><br/>
+  <mat-form-field>
+    <mat-label>Select</mat-label>
+    <mat-select formControlName="factoryId">
+      <mat-option *ngFor="let factory of factories" [value]="factory.id">{{ factory.factoryName }}</mat-option>
+    </mat-select>
+  </mat-form-field>
 
-<div *ngIf="showTable"   >
+
+  <mat-form-field>
+    <mat-label>From</mat-label>
+    <input matInput [matDatepicker]="picker1" [formControl]="date">
+   
+    <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+    <mat-datepicker #picker1></mat-datepicker>
+  </mat-form-field>
+  
+
+  <mat-form-field>
+    <mat-label>To</mat-label>
+    <input matInput [matDatepicker]="picker3" [value]="date.value">
+
+    <mat-datepicker-toggle matIconSuffix [for]="picker3"></mat-datepicker-toggle>
+    <mat-datepicker #picker3></mat-datepicker>
+  </mat-form-field>
+  <button mat-raised-button >{{'Search'| translate}}       <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="search"></mat-icon></button>
+
+</div>
+
+</div>
+</form>
+
+<!-- <div *ngIf="isLoading">
+ 
+  <mat-spinner></mat-spinner>  
+  </div> -->
+
+<div *ngIf="showTable" >  
+
   <div class="table-container">
+ 
   <mat-table [dataSource]="dataSource">
     <ng-container matColumnDef="id">
       <mat-header-cell *matHeaderCellDef>{{'id'| translate }} </mat-header-cell>
@@ -329,7 +400,7 @@
     <ng-container matColumnDef="actions">
       <mat-header-cell *matHeaderCellDef>{{'actions'| translate }}</mat-header-cell>
       <mat-cell *matCellDef="let data">
-        <button mat-raised-button (click)="EditVechile(data)" color="primary">{{'Edit'| translate }}</button>  
+        <button mat-raised-button (click)="EditVechile(data,'edit')" color="primary">{{'Edit'| translate }}</button>  
         <button mat-raised-button color="warn" (click)="openDeleteConfirmationDialog(data.id)">{{'Delete'| translate }}</button>
   
 
@@ -347,5 +418,7 @@
               [pageSizeOptions]="[5, 10, 25, 100]"
               aria-label="Select page">
 </mat-paginator>
-</div>  
+  
+</div>
+
 </div>

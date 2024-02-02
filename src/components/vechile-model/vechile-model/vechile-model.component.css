@@ -5,7 +5,7 @@
     @apply flex space-x-4 mt-1;
   }
   .section2{
-    @apply flex space-x-4 mt-1;
+    @apply flex space-x-4 mt-1 pl-9;
   }
   .section3{
     @apply flex space-x-4 mt-1;
@@ -22,7 +22,9 @@
     @apply  mt-3;
     overflow-x: auto;
   }
-  
+  mat-form-field {
+    margin-right: 12px;
+  }
 
   
   mat-header-cell,
