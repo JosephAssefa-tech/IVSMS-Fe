@@ -33,13 +33,12 @@
       <option *ngFor="let lang of supportedLanguages" [value]="lang.code">{{ lang.name }}</option>
     </select>
     
+
     
-    <button mat-raised-button color="primary"  (click)="saveVechileModel()">
-      {{'Import'|translate}}
-      <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="import"></mat-icon>
 
-    </button>        
-
+      <input type="file" (change)="onFileChange($event)" />
+   
+    
     <button mat-raised-button (click)="toggleTableVisibility()">{{'Show table' | translate}}</button>
   </div>
 
@@ -50,215 +49,7 @@
       </mat-divider>
 </div>
 
-<!-- <mat-card style="margin-left:8rem; margin-right: 8rem; ">
-  <mat-card-content>
-<form [formGroup]="myGroup">
 
-    <div class="section1">
-      <div>
-        <mat-label>{{ 'Model' | translate }} <span class="required-field">*</span></mat-label><br/>
-        <mat-form-field appearance="outline">
-          <input matInput placeholder="MITICA-DIECAST" formControlName="model">
-          <mat-error *ngIf="myGroup.get('model')?.hasError('required')">Car Model is required</mat-error>
-        </mat-form-field>
-      </div>
-      
-    <div><mat-label>{{'Width' | translate }}<span class="required-field">*</span></mat-label><br/>
-      <mat-form-field appearance="outline">  
-        <input matInput placeholder="width of car" formControlName="width">
-        <mat-error *ngIf="myGroup.get('width')?.hasError('required')">Width is required</mat-error>
-        <mat-error *ngIf="myGroup.get('width')?.hasError('pattern')">Width can't be character</mat-error>
-        
-             </mat-form-field>
-    </div>
-    <div><mat-label>{{'Length' | translate }}<span class="required-field">*</span></mat-label><br/>
-      <mat-form-field appearance="outline">
-          <input matInput placeholder="length of car" formControlName="length"> 
-          <mat-error *ngIf="myGroup.get('length')?.hasError('required')">Length is required</mat-error>                  
-          <mat-error *ngIf="myGroup.get('length')?.hasError('pattern')">length can't be character</mat-error>              
-        </mat-form-field>
-    </div>
-    <div><mat-label>{{ 'Height' | translate }}<span class="required-field">*</span></mat-label><br/>
-      <mat-form-field appearance="outline">
-     
-        <input matInput placeholder="Placeholder" formControlName="height">
-        <mat-error *ngIf="myGroup.get('height')?.hasError('required')">height is required</mat-error>            
-        <mat-error *ngIf="myGroup.get('height')?.hasError('pattern')">height can't be character</mat-error>              
-
-  
-      </mat-form-field>
-    </div>
-    <div><mat-label>{{'Engine Capacity'| translate }}<span class="required-field">*</span></mat-label><br/>
-      <mat-form-field appearance="outline">
-     
-        <mat-error *ngIf="myGroup.get('engineCapacity')?.hasError('required')">engine Capacity is required</mat-error>            
-        <mat-error *ngIf="myGroup.get('engineCapacity')?.hasError('pattern')">Capacity can't be character</mat-error>              
-
-        <input matInput placeholder="Placeholder" formControlName="engineCapacity">
-       
-    
-      </mat-form-field>
-    </div>
-   
-  </div>
-    <div class="section2">
-      <div><mat-label>{{'Horse power'| translate }}<span class="required-field">*</span></mat-label><br/>
-      <mat-form-field appearance="outline">
-     
-        <input matInput placeholder="Placeholder" formControlName="horsePower">
-        <mat-error *ngIf="myGroup.get('horsePower')?.hasError('required')">horse Power is required</mat-error>            
-       
-      </mat-form-field>
-    </div>
-    <div><mat-label>{{'Gross Weight'| translate }}<span class="required-field">*</span></mat-label><br/>
-      <mat-form-field appearance="outline">
-    
-        <input matInput placeholder="Placeholder" formControlName="grossWeight">
-        <mat-error *ngIf="myGroup.get('grossWeight')?.hasError('required')">gross Weight Power is required</mat-error>            
-        <mat-error *ngIf="myGroup.get('grossWeight')?.hasError('pattern')">grossWeight can't be character</mat-error>              
-
-   
-      </mat-form-field>
-    </div>
-    <div><mat-label>{{'Net Weight'| translate }}<span class="required-field">*</span></mat-label><br/>
-      <mat-form-field appearance="outline">
-    
-        <input matInput placeholder="Placeholder" formControlName="netWeight">
-        <mat-error *ngIf="myGroup.get('netWeight')?.hasError('required')">net Weight Weight Power is required</mat-error>            
-        <mat-error *ngIf="myGroup.get('netWeight')?.hasError('pattern')">net Weight can't be character</mat-error>              
-
-       
-      </mat-form-field>
-    </div>
-
-
-    <div>
-      <mat-label>{{'Fuel type'| translate }}<span class="required-field">*</span></mat-label><br/>
-      <mat-form-field>
-        <mat-label>Select</mat-label>
-        <mat-select formControlName="fuelType">
-          <mat-option [value]="fuelTypes.Gasoline">Gasoline</mat-option>
-          <mat-option [value]="fuelTypes.DieselFuel">DieselFuel</mat-option>
-          <mat-option [value]="fuelTypes.NoFuel">NoFuel</mat-option>
-          <mat-option [value]="fuelTypes.ElectricCharge">ElectricCharge</mat-option>
-        </mat-select>
-        <mat-error *ngIf="myGroup.get('fuelType')?.hasError('required')">fuelType is required</mat-error>
-      </mat-form-field>
-    </div>
-    
-    <div>
-      <mat-label>{{'Factory'| translate }}<span class="required-field">*</span></mat-label><br/>
-      <mat-form-field>
-        <mat-label>Select</mat-label>
-        <mat-select formControlName="factoryId">
-          <mat-option *ngFor="let factory of factories" [value]="factory.id">{{ factory.factoryName }}</mat-option>
-        </mat-select>
-      </mat-form-field>
-
-      
-    </div>
-    
-    </div>
-    <div class="section3">
-      <div><mat-label>{{'Axle Distance'| translate }}<span class="required-field">*</span></mat-label><br/>
-      <mat-form-field appearance="outline">
-     
-        <input matInput placeholder="Placeholder" formControlName="axleDistance">
-        <mat-error *ngIf="myGroup.get('axleDistance')?.hasError('required')">axleDistance is required</mat-error>            
-        <mat-error *ngIf="myGroup.get('axleDistance')?.hasError('pattern')">axle Distance can't be character</mat-error>              
-
-      </mat-form-field>
-    </div>
-    <div><mat-label>{{'Axle Number'| translate }}<span class="required-field">*</span></mat-label><br/>
-      <mat-form-field appearance="outline">
-    
-        <input matInput placeholder="Placeholder"  formControlName="numberOfAxle">
-        <mat-error *ngIf="myGroup.get('numberOfAxle')?.hasError('required')">numberOfAxle is required</mat-error>            
-        <mat-error *ngIf="myGroup.get('numberOfAxle')?.hasError('pattern')">numberOfAxle can't be character</mat-error>              
-
-             </mat-form-field>
-    </div>
-    <div><mat-label>{{'Type of drive'| translate }}<span class="required-field">*</span></mat-label><br/>
-      <mat-form-field appearance="outline">
-    
-        <input matInput placeholder="Placeholder" formControlName="typeOfDrive">
-        <mat-error *ngIf="myGroup.get('typeOfDrive')?.hasError('required')">typeOfDrive is required</mat-error>            
-      
-      
-      </mat-form-field>
-    </div>
-    <div><mat-label>{{'Type of Tyre(F)'| translate }}<span class="required-field">*</span></mat-label><br/>
-      <mat-form-field appearance="outline">
-        <mat-error *ngIf="myGroup.get('tyreSizeF')?.hasError('required')">tyreSizeF is required</mat-error>            
-      
-        <input matInput placeholder="Placeholder" formControlName="tyreSizeF" > 
-      </mat-form-field>
-    </div>
-    <div><mat-label>{{'Type of Tyre(B)'| translate }}<span class="required-field">*</span></mat-label><br/>
-      <mat-form-field appearance="outline"> 
-        <mat-error *ngIf="myGroup.get('tyreSizeB')?.hasError('required')">tyreSizeB is required</mat-error>            
-      
-        <input matInput placeholder="Placeholder" formControlName="tyreSizeB" >    
-      </mat-form-field>
-    </div>
- 
-
- 
-    
- 
-    </div>
-    <div class="section4">
-      <div><mat-label>{{'Cylinder number' | translate }}<span class="required-field">*</span></mat-label><br/>
-        <mat-form-field appearance="outline">
-          <mat-error *ngIf="myGroup.get('numberOfCylinder')?.hasError('required')">Length is required</mat-error>            
-         
-          <mat-error *ngIf="myGroup.get('numberOfCylinder')?.hasError('pattern')">number Of Cylinder can't be character</mat-error>              
-
-          <input matInput placeholder="Placeholder" formControlName="numberOfCylinder">   
-          
-        </mat-form-field>
-      </div>
-    
-        <div><mat-label>{{'People Capacity'| translate }}<span class="required-field">*</span></mat-label><br/>
-        <mat-form-field appearance="outline">
-          <mat-error *ngIf="myGroup.get('numberOfSeat')?.hasError('required')">People Capacity is required</mat-error>            
-          <mat-error *ngIf="myGroup.get('numberOfSeat')?.hasError('pattern')">People Capacity can't be character</mat-error>              
-
-      
-          <input matInput placeholder="Placeholder" formControlName="numberOfSeat">
-      
-      
-        </mat-form-field>
-      </div>
-    
-        <div><mat-label>{{'Number of Tyre(F)'| translate }}<span class="required-field">*</span></mat-label><br/>
-   
-          <mat-form-field appearance="outline">  
-            <mat-error *ngIf="myGroup.get('numberOfTyreF')?.hasError('required')">number Of TyreF is required</mat-error>            
-               
-            <input matInput placeholder="Placeholder" formControlName="numberOfTyreF">      
-          </mat-form-field></div>  
-      
-        <div><mat-label>{{'Number of Tyre(B)'| translate }}<span class="required-field">*</span></mat-label><br/>
-            <mat-form-field appearance="outline">      
-              <mat-error *ngIf="myGroup.get('numberOfTyreB')?.hasError('required')">numberOfTyreB is required</mat-error>            
-                 
-              <input matInput placeholder="Placeholder" formControlName="numberOfTyreB">      
-            </mat-form-field></div>
-            <div><mat-label>{{'Cargo Capacity'| translate }}<span class="required-field">*</span></mat-label><br/>
-        <mat-form-field appearance="outline">
-       
-          <input matInput placeholder="Placeholder" formControlName="cargoCapacity">
-          <mat-error *ngIf="myGroup.get('cargoCapacity')?.hasError('required')">cargo Capacity  Power is required</mat-error>            
-       
-       
-        </mat-form-field>
-      </div>
-  
-      </div>
-  </form>
-  </mat-card-content>
-</mat-card> -->
 <form  [formGroup]="myGroup" (ngSubmit)="onSubmit()">
 <div class="section2" >
   <div>
@@ -334,6 +125,15 @@
       <mat-header-cell *matHeaderCellDef>{{'Model'| translate }}</mat-header-cell>
       <mat-cell *matCellDef="let data">{{ data.model }}</mat-cell>
     </ng-container>
+
+    <ng-container matColumnDef="factory">
+      <mat-header-cell *matHeaderCellDef>{{'factory'| translate }}</mat-header-cell>
+      <mat-cell *matCellDef="let data">{{ data.factory.factoryName  | translate }}</mat-cell>
+    </ng-container>
+
+
+
+
 
     <ng-container matColumnDef="width">
       <mat-header-cell *matHeaderCellDef>{{'Width'| translate }}</mat-header-cell>

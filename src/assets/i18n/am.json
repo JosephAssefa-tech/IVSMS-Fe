@@ -33,7 +33,10 @@
     "Close":"ዝጋ",
     "Search":"ፈልግ",
     "Show table":"ዝርዝር አሳይ",
-    "Update":"አስተካክል"
+    "Update":"አስተካክል",
+    "Are you sure you want to delete":"ፋይሉን ማጥፋት የፈልጋሉ",
+    "No":"አልፈልግም",
+    "Yes":"አዎን"
 
   }
   

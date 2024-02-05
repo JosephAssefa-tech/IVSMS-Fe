@@ -33,7 +33,10 @@
     "Close":"Close",
     "Search":"Search",
     "Show table":"Show table",
-    "Update":"Update"
+    "Update":"Update",
+    "Are you sure you want to delete":"Are you sure you want to delete",
+    "No":"No",
+    "Yes":"Yes"
 
 
   }

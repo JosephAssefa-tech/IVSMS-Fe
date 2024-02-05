@@ -11,6 +11,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
+import * as XLSX from 'xlsx';
 import { VechileModelRegisterComponent } from '../../modal/model-registration/vechile-model-register/vechile-model-register.component';
 interface UserData {
   name: string;
@@ -26,6 +27,7 @@ enum FuelType
     ElectricCharge = 3
 }
 export interface VechileFilterRequest {
+
   model: string;
   fuelType: string; // Adjust the type according to your API
   factoryId: string; // Adjust the type according to your API
@@ -46,7 +48,7 @@ export class VechileModelComponent {
   ];
   selectedRowData: any;
   selectedLanguage = 'am'; // or whatever the code is for Amharic
-
+  file: File | null = null;
 
   factories: any[] = [];
   filteredFactories: Observable<any[]> | undefined;
@@ -55,7 +57,7 @@ export class VechileModelComponent {
   myGroup!: FormGroup; // Add the definite assignment assertion here
   fuelTypes = FuelType;
   title = 'vechile-mgt-mui';
-  displayedColumns: string[] = ['id', 'model', 'width','length','height','axleDistance','numberOfAxle','engineCapacity','numberOfCylinder','horsePower','grossWeight','netWeight','cargoCapacity','typeOfDrive','numberOfTyreF','numberOfTyreB','actions']; // Add your columns
+  displayedColumns: string[] = ['id', 'model', 'factory','width','length','height','axleDistance','numberOfAxle','engineCapacity','numberOfCylinder','horsePower','grossWeight','netWeight','cargoCapacity','typeOfDrive','numberOfTyreF','numberOfTyreB','actions']; // Add your columns
   dataSource = new MatTableDataSource<any>();
   showTable: boolean = true;
   factoryIdControl = new FormControl();
@@ -100,6 +102,35 @@ export class VechileModelComponent {
     });
 
 }
+onFileChange(event: any): void {
+  const files = event.target.files;
+  if (files && files.length > 0) {
+    this.file = files[0];
+    this.parseExcel();
+  }
+}
+parseExcel(): void {
+  const reader: FileReader = new FileReader();
+
+  reader.onload = (e: any) => {
+    /* read workbook */
+    const bstr: string = e.target.result;
+    const wb: XLSX.WorkBook = XLSX.read(bstr, { type: 'binary' });
+
+    /* grab first sheet */
+    const wsname: string = wb.SheetNames[0];
+    const ws: XLSX.WorkSheet = wb.Sheets[wsname];
+
+    /* save data */
+    const data: any[] = XLSX.utils.sheet_to_json(ws, { header: 1 });
+    console.log('Excel Data:', data);
+
+    // Pass the data to your service or process it as needed
+  };
+
+  reader.readAsBinaryString(this.file!);
+}
+
 private _filterFactories(value: string): any[] {
   const filterValue = value.toLowerCase();
   return this.factories.filter(factory => factory.factoryName.toLowerCase().includes(filterValue));
@@ -162,7 +193,7 @@ switchLanguage() {
 EditVechile(selectedrowData: any, mode: 'edit' | 'save' = 'edit') {
   const dialogRef = this.dialog.open(VechileModelRegisterComponent, {
     width:'auto',
-    data: { mode, selectedrowData ,id: selectedrowData.id},
+    data: { mode, selectedrowData ,id: selectedrowData.id,factoryName: selectedrowData.factory.factoryName},
   });
 
   dialogRef.afterClosed().subscribe((result) => {
@@ -238,7 +269,8 @@ loadVechileMOdels() {
   this.vechileModelService.getAll().subscribe(
     (response: any) => {
       this.dataSource.data = response.data;
-      console.log(this.vechileModels);
+      console.log("fileeee")
+      console.log(response.data);
       this.isLoading = false; // Set loading to false once data is fetched
     },
     (error) => {

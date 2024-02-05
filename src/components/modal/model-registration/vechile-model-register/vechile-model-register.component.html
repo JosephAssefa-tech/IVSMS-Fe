@@ -92,7 +92,7 @@
         <mat-label>{{'Fuel type'| translate }}<span class="required-field">*</span></mat-label><br/>
         <mat-form-field>
           <mat-label>Select</mat-label>
-          <mat-select formControlName="fuelType">
+          <mat-select formControlName="fuelType" >
             <mat-option [value]="fuelTypes.Gasoline">Gasoline</mat-option>
             <mat-option [value]="fuelTypes.DieselFuel">DieselFuel</mat-option>
             <mat-option [value]="fuelTypes.NoFuel">NoFuel</mat-option>
@@ -106,12 +106,10 @@
         <mat-label>{{'Factory'| translate }}<span class="required-field">*</span></mat-label><br/>
         <mat-form-field>
           <mat-label>Select</mat-label>
-          <mat-select formControlName="factoryId">
+          <mat-select formControlName="factoryId" >
             <mat-option *ngFor="let factory of factories" [value]="factory.id">{{ factory.factoryName }}</mat-option>
           </mat-select>
-        </mat-form-field>
-  
-        
+        </mat-form-field>     
       </div>
       
       </div>

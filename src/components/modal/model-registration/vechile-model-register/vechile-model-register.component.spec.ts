@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import VechileModelRegisterComponent from './vechile-model-register.component';
+import { VechileModelRegisterComponent } from './vechile-model-register.component';
 
 describe('VechileModelRegisterComponent', () => {
   let component: VechileModelRegisterComponent;

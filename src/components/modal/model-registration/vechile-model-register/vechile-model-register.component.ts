@@ -53,7 +53,7 @@ enum FuelType
   factoryIdControl = new FormControl();
   constructor(
     private location: Location,
-    @Inject(MAT_DIALOG_DATA) public data: { mode: 'edit' | 'save'; selectedrowData: any; id?: number } = { mode: 'edit', selectedrowData: null },
+    @Inject(MAT_DIALOG_DATA) public data: { mode: 'edit' | 'save'; selectedrowData: any; id?: number ;factoryName?:string} = { mode: 'edit', selectedrowData: null },
     public dialogRef: MatDialogRef<VechileModelRegisterComponent>,
     private translateService: TranslateService,
     private dialog: MatDialog,
@@ -120,9 +120,10 @@ getButtonLabel(): string {
 private setFormValues(): void {
   // Set form values based on the data for editing
   if (this.data && this.data.selectedrowData) {
-   
+
     const rowData = this.data.selectedrowData;
-    console.log( rowData.fuelType)
+console.log("form factory name");
+console.log(this.data.selectedrowData.factory.factoryName)
     this.myGroup.setValue({
       model: rowData.model || '',
       width: rowData.width || '',
@@ -136,7 +137,7 @@ private setFormValues(): void {
       cargoCapacity:rowData.cargoCapacity || '',
       numberOfSeat:rowData.numberOfSeat || '',
       fuelType:rowData.fuelType || '',
-      factoryId:rowData.factoryId || '',
+      factoryId:rowData.factory.id|| '',
       axleDistance:rowData.axleDistance || '',
       numberOfAxle:rowData.numberOfAxle || '',
       typeOfDrive:rowData.typeOfDrive || '',
@@ -297,6 +298,7 @@ saveVechileModel() {
 
       // Include the 'id' property in the formData
       formData.id = this.data.id;
+     //formData.factoryName=this.data.factoryName;
 
       // Editing an existing record
       const editedData = { ...this.selectedRowData, ...formData };
