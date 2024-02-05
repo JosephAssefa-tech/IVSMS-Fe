@@ -158,7 +158,7 @@ onNoClick(): void {
 }
   popup(): void {
     const dialogRef = this.dialog.open(VechileModelRegisterComponent, {
-      width: '1200px',
+      width: 'auto',
       height:'600px'
     });
   
