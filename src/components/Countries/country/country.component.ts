@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { CountryService } from '../../../services/country-service/country.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { ModalServiceService } from '../../../services/modal/modal-service.service';
 
 @Component({
   selector: 'app-country',
@@ -20,7 +21,7 @@ export class CountryComponent {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { mode: 'edit' | 'save'; selectedrowData: any; id?: number ;countryNameEng ?:string} = { mode: 'edit', selectedrowData: null },
     public dialogRef: MatDialogRef<CountryComponent>,
-    private countryService: CountryService,  private snackBar: MatSnackBar, private formBuilder: FormBuilder)
+    private countryService: CountryService, private modalService: ModalServiceService,  private snackBar: MatSnackBar, private formBuilder: FormBuilder)
   {
     
   }
@@ -36,14 +37,14 @@ export class CountryComponent {
     });
     console.log("logging mode");
 
-this.mode = this.countryService.getMode();
+this.mode = this.modalService.getMode();
 console.log(this.mode);
     this.Countries();
     this.setFormValues();
     this.switchToSaveMode();
 }
 switchToSaveMode() {
-  this.countryService.setMode('save');
+  this.modalService.setMode('save');
 }
 private setFormValues(): void {
   // Set form values based on the data for editing
@@ -85,7 +86,7 @@ saveVechileModel() {
  
  //   // Get the form values
     const formData = this.myGroup.value;
-let dat= this.countryService.getMode();
+let dat= this.modalService.getMode();
 console.log("what is value of mode")
 console.log(dat);
    if (this.mode === 'edit') {

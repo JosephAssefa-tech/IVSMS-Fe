@@ -7,6 +7,7 @@ import { DeleteConfirmationDeialogComponent } from '../../../modal/delete-confir
 import { MatDialog } from '@angular/material/dialog';
 import { CountryComponent } from '../../country/country.component';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { ModalServiceService } from '../../../../services/modal/modal-service.service';
 
 @Component({
   selector: 'app-country-table',
@@ -19,7 +20,7 @@ export class CountryTableComponent {
   displayedColumns: string[] = ['id', 'countryNameAmh', 'countryNameEng','countryCode','point','actions'];
   factories: any[] = [];
   dataSource = new MatTableDataSource<any>();
-  constructor(private dialog: MatDialog, private countryService: CountryService,  private snackBar: MatSnackBar, private formBuilder: FormBuilder)
+  constructor(private dialog: MatDialog,private modalService: ModalServiceService, private countryService: CountryService,  private snackBar: MatSnackBar, private formBuilder: FormBuilder)
   {
     
   }
@@ -32,8 +33,8 @@ export class CountryTableComponent {
 }
 switchToSaveMode() {
   console.log("Setting mode to 'edit'");
-  this.countryService.setMode('edit');
-  const currentMode = this.countryService.getMode();
+  this.modalService.setMode('edit');
+  const currentMode = this.modalService.getMode();
 console.log(`Current mode is '${currentMode}'`);
 
 }
@@ -54,12 +55,12 @@ Countries()
 
 EditVechile(selectedrowData: any) {
 
-  this.countryService.setMode('edit');
+  this.modalService.setMode('edit');
 
   const dialogRef = this.dialog.open(CountryComponent, {
     width: 'auto',
     // Pass the correct mode value retrieved from the service
-    data: { mode: this.countryService.getMode(), selectedrowData, id: selectedrowData.id, countryNameEng: selectedrowData.countryNameEng },
+    data: { mode: this.modalService.getMode(), selectedrowData, id: selectedrowData.id, countryNameEng: selectedrowData.countryNameEng },
   });
 
   dialogRef.afterClosed().subscribe((result) => {

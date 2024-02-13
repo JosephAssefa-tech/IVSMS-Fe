@@ -39,11 +39,16 @@ ss
       <ng-container matColumnDef="actions">
         <mat-header-cell *matHeaderCellDef>actions</mat-header-cell>
         <mat-cell *matCellDef="let data" >
-          <div style="margin-right: 5px;">
+        
+            <div style="margin-right: 5px;">
+              <button mat-raised-button (click)="EditVechile(data)" color="primary"><mat-icon>edit</mat-icon> </button>  
+            </div>
             
-            <button mat-raised-button (click)="EditVechile(data)" color="primary"><mat-icon>edit</mat-icon> </button>  
-            <button mat-raised-button color="warn" (click)="openDeleteConfirmationDialog(data.id)"><mat-icon>delete</mat-icon> </button>
-      </div>
+            <div>
+              <button mat-raised-button color="warn" (click)="openDeleteConfirmationDialog(data.id)"><mat-icon>delete</mat-icon> </button>
+            </div>
+             
+             
          
   
         </mat-cell>

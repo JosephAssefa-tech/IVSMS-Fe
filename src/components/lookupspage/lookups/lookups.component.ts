@@ -25,18 +25,21 @@ export class LookupsComponent {
  
     switch (this.selectedTabIndex) {
       case 0:
-        this.countryService.setMode('save');
+        this.modalService.setMode('save');
         this.toggleForm(CountryComponent);
      
         break;
       case 1:
+        this.modalService.setMode('save');
         this.toggleForm(FactoryComponent);
         break;
      
       case 2:
+        this.modalService.setMode('save');
         this.toggleForm(DepreciationComponent);
         break;
       case 3:
+        this.modalService.setMode('save');
         this.toggleForm(InflationComponent);
         break;
       case 4:

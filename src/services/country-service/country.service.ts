@@ -11,7 +11,7 @@ import { ApiResponse } from '../../models/get/factory';
 export class CountryService  extends BaseService<ApiResponse>{
   //private citiesSubject: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   //public cities$ = this.citiesSubject.asObservable();
-  private mode: 'edit' | 'save' = 'save'; // Default mode is 'edit'
+ 
 
 
   listOfCities=`${environment.apiUrl}country`;
@@ -22,12 +22,5 @@ export class CountryService  extends BaseService<ApiResponse>{
   constructor( httpClient: HttpClient) {
     super(httpClient);
   }
-  setMode(mode: 'edit' | 'save'): void {
-    this.mode = mode; // Set the mode
 
-  }
-
-  getMode(): 'edit' | 'save' {
-    return this.mode; // Return the current mode
-  }
 }
