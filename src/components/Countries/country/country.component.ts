@@ -11,6 +11,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
   styleUrl: './country.component.css'
 })
 export class CountryComponent {
+  mode: 'edit' | 'save' | undefined;
   myGroup!: FormGroup; // Add the definite assignment assertion here
   displayedColumns: string[] = ['id', 'countryNameAmh', 'countryNameEng','countryCode','point','actions'];
   factories: any[] = [];
@@ -34,7 +35,9 @@ export class CountryComponent {
       countryCode: ['', Validators.required],
     });
     console.log("logging mode");
-console.log(this.data.mode);
+
+this.mode = this.countryService.getMode();
+console.log(this.mode);
     this.Countries();
     this.setFormValues();
     this.switchToSaveMode();
@@ -67,7 +70,8 @@ Countries()
 
 }
 
-
+UpdateCountries()
+{}
 EditVechile(selectedrowData: any, mode: 'edit' | 'save' = 'edit') {
 
 
@@ -81,9 +85,11 @@ saveVechileModel() {
  
  //   // Get the form values
     const formData = this.myGroup.value;
-
-   if (this.data.mode === 'edit') {
-     console.log("editing");
+let dat= this.countryService.getMode();
+console.log("what is value of mode")
+console.log(dat);
+   if (this.mode === 'edit') {
+   
 
      // Include the 'id' property in the formData
      formData.id = this.data.id;

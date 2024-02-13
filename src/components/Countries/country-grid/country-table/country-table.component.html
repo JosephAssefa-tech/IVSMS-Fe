@@ -41,8 +41,8 @@ ss
         <mat-cell *matCellDef="let data" >
           <div style="margin-right: 5px;">
             
-            <button mat-raised-button (click)="EditVechile(data)" color="primary">Edit </button>  
-            <button mat-raised-button color="warn" (click)="openDeleteConfirmationDialog(data.id)">Delete </button>
+            <button mat-raised-button (click)="EditVechile(data)" color="primary"><mat-icon>edit</mat-icon> </button>  
+            <button mat-raised-button color="warn" (click)="openDeleteConfirmationDialog(data.id)"><mat-icon>delete</mat-icon> </button>
       </div>
          
   
@@ -54,9 +54,6 @@ ss
     
       <mat-row  *matRowDef="let data; columns: displayedColumns" ></mat-row>
     </mat-table>
+    <mat-paginator  [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" (page)="onPageChange($event)"></mat-paginator>
   </div>
-    <mat-paginator [length]="100"
-                [pageSize]="10"
-                [pageSizeOptions]="[5, 10, 25, 100]"
-                aria-label="Select page">
-  </mat-paginator>
+ 

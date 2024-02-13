@@ -22,11 +22,12 @@ export class LookupsComponent {
     this.selectedTabIndex = index;
   }
   openModal() {
-    
+ 
     switch (this.selectedTabIndex) {
       case 0:
-        this.toggleForm(CountryComponent);
         this.countryService.setMode('save');
+        this.toggleForm(CountryComponent);
+     
         break;
       case 1:
         this.toggleForm(FactoryComponent);
