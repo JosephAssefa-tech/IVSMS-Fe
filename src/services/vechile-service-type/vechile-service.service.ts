@@ -7,11 +7,10 @@ import { BaseService } from '../base-service/base-service';
 @Injectable({
   providedIn: 'root'
 })
-export class DeperciationService extends BaseService<ApiResponse> {
-
-  listOfCities=`${environment.apiUrl}depreciations`;
+export class VechileServiceService extends BaseService<ApiResponse> {
+  listOfCities=`${environment.apiUrl}vehicleServiceTypes`;
   getResourceUrl(): string {
-    return 'depreciations';
+    return 'vehicleServiceTypes';
    }
 
   constructor( httpClient: HttpClient) {

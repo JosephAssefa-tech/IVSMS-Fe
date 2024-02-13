@@ -1,0 +1,15 @@
+.component-container{
+    width: 720px; /* Adjust the width as needed */
+}
+.flex-container {
+    display: flex;
+  }
+  
+  .section1, .section2 {
+    flex: 1;
+  }
+  .required-field {
+  
+    @apply ml-1 text-red-600;
+  }
+ 

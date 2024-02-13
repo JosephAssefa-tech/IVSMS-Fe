@@ -1,0 +1,11 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .container{
+    padding-top: 10%;
+    padding-left: 40%;
+    display: inline-grid;
+    width: 75%;
+  }

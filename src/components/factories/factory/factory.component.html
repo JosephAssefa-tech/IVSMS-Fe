@@ -1,0 +1,52 @@
+
+<div class="component-container">
+
+<div class="flex items-center justify-center space-x-4 px-4 p-2" style="background-color: #1B7EC1;">
+
+    <button mat-raised-button color="green" [disabled]="!myGroup.valid" (click)="saveVechileModel()">Save</button>        
+   <!-- <button mat-raised-button color="primary" (click)="onNoClick()">{{'Close'|translate}}</button>         -->
+
+  </div>
+<div>
+
+
+<mat-card style="margin-left:5px; margin-right: 5px; margin-top:1rem;">
+    <mat-card-content>
+  <form [formGroup]="myGroup">
+  
+      <div class="section1">
+        <div>
+          <mat-label>factoryNameAmh <span class="required-field">*</span></mat-label><br/>
+          <mat-form-field appearance="outline">
+            <input matInput placeholder="MITICA-DIECAST" formControlName="factoryNameAmh">
+            <mat-error *ngIf="myGroup.get('factoryNameAmh')?.hasError('required')">factoryNameAmhis required</mat-error>
+          </mat-form-field>
+        </div>
+        
+      <div><mat-label>FactoryNameEng<span class="required-field">*</span></mat-label><br/>
+        <mat-form-field appearance="outline">  
+          <input matInput placeholder="factoryNameEng of car" formControlName="factoryNameEng">
+          <mat-error *ngIf="myGroup.get('factoryNameEng')?.hasError('required')">FactoryNameEng is required</mat-error>
+          <!-- <mat-error *ngIf="myGroup.get('FactoryNameEng')?.hasError('pattern')">FactoryNameEng can't be character</mat-error> -->
+          
+               </mat-form-field>
+      </div>
+      <div><mat-label>Code<span class="required-field">*</span></mat-label><br/>
+        <mat-form-field appearance="outline">
+            <input matInput placeholder="Code of car" formControlName="code"> 
+            <mat-error *ngIf="myGroup.get('code')?.hasError('required')">Length is required</mat-error>                  
+       
+          </mat-form-field>
+      </div>
+ 
+  
+     
+    </div>
+    
+     
+   
+    </form>
+    </mat-card-content>
+  </mat-card>
+</div>
+</div>

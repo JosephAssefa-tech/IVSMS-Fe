@@ -2,14 +2,14 @@ import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
-import { InflationService } from '../../../services/inflation-service/inflation.service';
+import { InflationService } from '../../../../services/inflation-service/inflation.service';
 
 @Component({
-  selector: 'app-inflation',
-  templateUrl: './inflation.component.html',
-  styleUrl: './inflation.component.css'
+  selector: 'app-inflation-table',
+  templateUrl: './inflation-table.component.html',
+  styleUrl: './inflation-table.component.css'
 })
-export class InflationComponent {
+export class InflationTableComponent {
   myGroup!: FormGroup; // Add the definite assignment assertion here
   displayedColumns: string[] = ['id', 'serviceYear', 'point','actions'];
   factories: any[] = [];
@@ -117,3 +117,4 @@ saveVechileModel() {
  //   console.error('Invalid form data');
   } 
 }
+

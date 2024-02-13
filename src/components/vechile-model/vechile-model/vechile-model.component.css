@@ -19,7 +19,7 @@
   }
 
   .table-container {
-    @apply  mt-3;
+    @apply  mt-1;
     overflow-x: auto;
   }
   mat-form-field {

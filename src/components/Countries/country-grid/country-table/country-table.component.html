@@ -1,0 +1,62 @@
+<div class="table-container">
+ 
+    <mat-table [dataSource]="dataSource">
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef>{{'id'| translate }} </mat-header-cell>
+        <mat-cell *matCellDef="let data; let i = index">{{ i + 1 }}</mat-cell>
+      </ng-container>
+      
+  
+      <ng-container matColumnDef="countryNameAmh">
+        <mat-header-cell *matHeaderCellDef>countryNameAmh</mat-header-cell>
+        <mat-cell *matCellDef="let data">{{ data.countryNameAmh }}</mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="countryNameEng">
+        <mat-header-cell *matHeaderCellDef>countryNameEng</mat-header-cell>
+        <mat-cell *matCellDef="let data">{{ data.countryNameEng  }}</mat-cell>
+      </ng-container>
+  
+  
+  
+  
+  
+      <ng-container matColumnDef="countryCode">
+        <mat-header-cell *matHeaderCellDef>countryCode</mat-header-cell>
+        <mat-cell *matCellDef="let data">{{ data.countryCode }}</mat-cell>
+      </ng-container>
+  
+
+    
+      <ng-container matColumnDef="point">
+        <mat-header-cell *matHeaderCellDef>point</mat-header-cell>
+        <mat-cell *matCellDef="let data">{{ data.point }}</mat-cell>
+      </ng-container>
+   
+  
+ss
+  
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef>actions</mat-header-cell>
+        <mat-cell *matCellDef="let data" >
+          <div style="margin-right: 5px;">
+            
+            <button mat-raised-button (click)="EditVechile(data)" color="primary">Edit </button>  
+            <button mat-raised-button color="warn" (click)="openDeleteConfirmationDialog(data.id)">Delete </button>
+      </div>
+         
+  
+        </mat-cell>
+      </ng-container>
+     
+      <mat-header-row style="background-color: #1B7EC1; color: #ffffff;" *matHeaderRowDef="displayedColumns"  >
+      </mat-header-row>
+    
+      <mat-row  *matRowDef="let data; columns: displayedColumns" ></mat-row>
+    </mat-table>
+  </div>
+    <mat-paginator [length]="100"
+                [pageSize]="10"
+                [pageSizeOptions]="[5, 10, 25, 100]"
+                aria-label="Select page">
+  </mat-paginator>

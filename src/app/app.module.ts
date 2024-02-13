@@ -30,6 +30,18 @@ import { VechileModelRegisterComponent } from '../components/modal/model-registr
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {provideNativeDateAdapter} from '@angular/material/core';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { TrainingComponent } from '../components/training/training/training.component';
+import { FactoryComponent } from '../components/factories/factory/factory.component';
+import { LookupsComponent } from '../components/lookupspage/lookups/lookups.component';
+import { DepreciationComponent } from '../components/Depreciation/depreciation/depreciation.component';
+import { InflationComponent } from '../components/Inflation/inflation/inflation.component';
+import { CountryComponent } from '../components/Countries/country/country.component';
+import {MatTabsModule} from '@angular/material/tabs';
+import { CountryTableComponent } from '../components/Countries/country-grid/country-table/country-table.component';
+import { DeperciationTableComponent } from '../components/Depreciation/deperciation-grid/deperciation-table/deperciation-table.component';
+import { FactoriesTableComponent } from '../components/factories/factories-grid/factories-table/factories-table.component';
+import { InflationTableComponent } from '../components/Inflation/inflation-grid/inflation-table/inflation-table.component';
+
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
@@ -40,7 +52,18 @@ export function HttpLoaderFactory(http: HttpClient) {
     AppComponent,
     VechileModelComponent,
     DeleteConfirmationDeialogComponent,
-    VechileModelRegisterComponent 
+    VechileModelRegisterComponent ,
+    TrainingComponent,
+    FactoryComponent,
+    LookupsComponent,
+    DepreciationComponent,
+    InflationComponent,
+    CountryComponent,
+    CountryTableComponent,
+    DeperciationTableComponent,
+    FactoriesTableComponent,
+    InflationTableComponent,
+    CountryTableComponent
   ],
   imports: [
     BrowserModule,
@@ -68,6 +91,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatSnackBarModule,
     MatGridListModule,
     HttpClientModule,
+    MatTabsModule,
     MatProgressSpinnerModule,
     TranslateModule.forRoot({
       loader: {

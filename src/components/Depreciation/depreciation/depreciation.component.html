@@ -14,13 +14,24 @@
   
       <div class="section1">
         <div>
-          <mat-label>Service Year <span class="required-field">*</span></mat-label><br/>
-          <mat-form-field appearance="outline">
-            <input matInput placeholder="MITICA-DIECAST" formControlName="serviceYear">
-            <mat-error *ngIf="myGroup.get('serviceYear')?.hasError('required')">serviceYear required</mat-error>
-          </mat-form-field>
-        </div>
+            <mat-label>Vehicle ServiceType<span class="required-field">*</span></mat-label><br/>
+            <mat-form-field>
+              <mat-label>Select</mat-label>
+              <mat-select formControlName="vehicleServiceTypeId">
+                <mat-option *ngFor="let serviceType of serviceType" [value]="serviceType.id">{{ serviceType.descriptionAmh }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
         
+      <div><mat-label>ServiceYear<span class="required-field">*</span></mat-label><br/>
+        <mat-form-field appearance="outline">  
+          <input matInput placeholder="ServiceYear of car" formControlName="serviceYear">
+          <mat-error *ngIf="myGroup.get('serviceYear')?.hasError('required')">serviceYear is required</mat-error>
+          <!-- <mat-error *ngIf="myGroup.get('FactoryNameEng')?.hasError('pattern')">FactoryNameEng can't be character</mat-error> -->
+          
+               </mat-form-field>
+      </div>
+ 
       <div><mat-label>Point<span class="required-field">*</span></mat-label><br/>
         <mat-form-field appearance="outline">  
           <input matInput placeholder="point of car" formControlName="point">
@@ -29,9 +40,7 @@
           
                </mat-form-field>
       </div>
- 
- 
-  
+      
      
     </div>
     
@@ -50,9 +59,14 @@
       </ng-container>
       
   
+      <ng-container matColumnDef="vehicleServiceTypeId">
+        <mat-header-cell *matHeaderCellDef>vehicleServiceType</mat-header-cell>
+        <mat-cell *matCellDef="let data">{{ data.vehicleServiceType.descriptionAmh }}</mat-cell>
+      </ng-container>
+  
       <ng-container matColumnDef="serviceYear">
-        <mat-header-cell *matHeaderCellDef>serviceYear</mat-header-cell>
-        <mat-cell *matCellDef="let data">{{ data.serviceYear }}</mat-cell>
+        <mat-header-cell *matHeaderCellDef>ServiceYear</mat-header-cell>
+        <mat-cell *matCellDef="let data">{{ data.serviceYear  }}</mat-cell>
       </ng-container>
   
       <ng-container matColumnDef="point">
@@ -61,9 +75,7 @@
       </ng-container>
   
   
-  
-  
-  
+      
  
 
   

@@ -1,3 +1,4 @@
+
 <div class="main-body">
 
 <div class="grid grid-cols-3 pt-2" style="background-color: #1B7EC1; color: white;">
@@ -32,7 +33,9 @@
     <select id="languageSelect" [(ngModel)]="selectedLanguage" (change)="changeLanguage()" class="p-2">
       <option *ngFor="let lang of supportedLanguages" [value]="lang.code">{{ lang.name }}</option>
     </select>
-    
+    <div *ngIf="uploading">
+      Uploadding
+    </div>
       <input type="file" (change)="onFileChange($event)" />
    
     
@@ -74,7 +77,7 @@
   <mat-form-field>
     <mat-label>Select</mat-label>
     <mat-select formControlName="factoryId">
-      <mat-option *ngFor="let factory of factories" [value]="factory.id">{{ factory.factoryName }}</mat-option>
+      <mat-option *ngFor="let factory of factories" [value]="factory.id">{{ factory.factoryNameAmh }}</mat-option>
     </mat-select>
   </mat-form-field>
 
@@ -125,7 +128,7 @@
 
     <ng-container matColumnDef="factory">
       <mat-header-cell *matHeaderCellDef>{{'factory'| translate }}</mat-header-cell>
-      <mat-cell *matCellDef="let data">{{ data.factory.factoryName  | translate }}</mat-cell>
+      <mat-cell *matCellDef="let data">{{ data.factory.factoryNameAmh  | translate }}</mat-cell>
     </ng-container>
 
 

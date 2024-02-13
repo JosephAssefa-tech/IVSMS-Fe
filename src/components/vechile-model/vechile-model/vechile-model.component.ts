@@ -13,6 +13,7 @@ import { startWith, map } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import * as XLSX from 'xlsx';
 import { VechileModelRegisterComponent } from '../../modal/model-registration/vechile-model-register/vechile-model-register.component';
+import { ExcelFileUploadService } from '../../../services/file-upload-service/excel-file-upload.service';
 interface UserData {
   name: string;
   age: number;
@@ -41,6 +42,9 @@ export interface VechileFilterRequest {
   styleUrl: './vechile-model.component.css'
 })
 export class VechileModelComponent {
+  items = ['item1', 'item2', 'item3', 'item4'];
+
+  
   supportedLanguages = [
     { code: 'en', name: 'English' },
     { code: 'am', name: 'Amharic' },
@@ -49,6 +53,7 @@ export class VechileModelComponent {
   selectedRowData: any;
   selectedLanguage = 'am'; // or whatever the code is for Amharic
   file: File | null = null;
+  uploading: boolean = false;
 
   factories: any[] = [];
   filteredFactories: Observable<any[]> | undefined;
@@ -59,15 +64,28 @@ export class VechileModelComponent {
   title = 'vechile-mgt-mui';
   displayedColumns: string[] = ['id', 'model', 'factory','width','length','height','axleDistance','numberOfAxle','engineCapacity','numberOfCylinder','horsePower','grossWeight','netWeight','cargoCapacity','typeOfDrive','numberOfTyreF','numberOfTyreB','actions']; // Add your columns
   dataSource = new MatTableDataSource<any>();
+
+
+
   showTable: boolean = true;
   factoryIdControl = new FormControl();
   date = new FormControl(new Date());
   serializedDate = new FormControl(new Date().toISOString());
-  constructor(private translateService: TranslateService,private dialog: MatDialog, private snackBar: MatSnackBar, private factoryService:FactoryService,private formBuilder: FormBuilder, private vechileModelService: VechileModelService)
+
+
+  currentItem = 'sfsdfsfsfsfsf';
+
+
+  constructor(private excelFileUploadService: ExcelFileUploadService,private translateService: TranslateService,private dialog: MatDialog, private snackBar: MatSnackBar, private factoryService:FactoryService,private formBuilder: FormBuilder, private vechileModelService: VechileModelService)
   {
    
     this.selectedLanguage = translateService.currentLang;
   
+  }
+  addItem(newItem: string) {
+    this.items.push(newItem);
+console.log("list of items")
+    console.log(this.items)
   }
   ngOnInit(): void {
     this.loadFactories();
@@ -125,11 +143,33 @@ parseExcel(): void {
     const data: any[] = XLSX.utils.sheet_to_json(ws, { header: 1 });
     console.log('Excel Data:', data);
 
-    // Pass the data to your service or process it as needed
+    // Set uploading flag to true
+    this.uploading = true;
+
+    // Send data to API using service
+    this.excelFileUploadService.uploadExcelData(data)
+      .subscribe(
+        response => {
+          console.log('Data sent to API:', response);
+          // Handle success response
+
+          // Set uploading flag to false on successful upload
+          this.uploading = false;
+        },
+        error => {
+          console.error('Error sending data to API:', error);
+          // Handle error
+
+          // Set uploading flag to false on error
+          this.uploading = false;
+        }
+      );
   };
 
   reader.readAsBinaryString(this.file!);
 }
+
+
 
 private _filterFactories(value: string): any[] {
   const filterValue = value.toLowerCase();
@@ -268,8 +308,10 @@ loadVechileMOdels() {
 
   this.vechileModelService.getAll().subscribe(
     (response: any) => {
-      this.dataSource.data = response.data;
+
       console.log("fileeee")
+      this.dataSource.data = response.data;
+     
       console.log(response.data);
       this.isLoading = false; // Set loading to false once data is fetched
     },

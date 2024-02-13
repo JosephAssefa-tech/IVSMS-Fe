@@ -1,0 +1,42 @@
+<div class="flex items-center justify-center space-x-4 px-4 p-2" style="background-color: #1B7EC1;">
+
+    <!-- <button mat-raised-button color="green"  >Save</button>      -->
+    <button  mat-raised-button  [disabled]="selectedTabIndex === -1" (click)="openModal()">New</button>   
+    <button  mat-raised-button disabled>Print</button>
+  
+    <!-- <button mat-raised-button color="primary" (click)="onNoClick()">{{'Close'|translate}}</button>         -->
+
+  </div>
+
+
+  <div class="bg-gray-200 hover:bg-red-200 rounded-md overflow-hidden">
+    <mat-tab-group (selectedIndexChange)="tabChanged($event)">
+    
+      <mat-tab label="Country of make">
+        <ng-template matTabContent>
+          <app-country-table></app-country-table>
+        </ng-template>
+      </mat-tab>
+      <mat-tab label="Company of make">
+        <ng-template matTabContent>
+          <app-factories-table></app-factories-table>
+        </ng-template>
+      </mat-tab>
+      <mat-tab label="Depreciation">
+        <ng-template matTabContent>
+          <app-deperciation-table></app-deperciation-table>
+        </ng-template>
+      </mat-tab>
+      <mat-tab label="Inflation">
+        <ng-template matTabContent>
+          <app-inflation-table></app-inflation-table>
+        </ng-template>
+      </mat-tab>
+      <mat-tab label="Service Type">
+        <ng-template matTabContent>
+          <!-- <app-service-type></app-service-type> -->
+        </ng-template>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+  

@@ -1,0 +1,4 @@
+mat-row:hover {
+    @apply hover:bg-gray-200;
+
+  }
