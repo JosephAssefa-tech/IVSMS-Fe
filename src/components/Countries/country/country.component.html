@@ -1,9 +1,9 @@
 
 <div class="component-container">
   <div class="flex items-center justify-center space-x-4 px-4 p-2" style="background-color: #1B7EC1;">
+    <h2 class="text-white text-left pt-2">Country of make</h2>
 
-    <button mat-raised-button color="green" [disabled]="!myGroup.valid" (click)="saveVechileModel()">Save</button>        
-    
+   
    
     <!-- <button mat-raised-button color="primary" (click)="onNoClick()">{{'Close'|translate}}</button>         -->
 
@@ -16,17 +16,17 @@
     <div class="flex-container">
       <div class="section1">
         <div>
-          <mat-label>countryNameEng <span class="required-field">*</span></mat-label><br/>
+          <mat-label>Country Name English <span class="required-field">*</span></mat-label><br/>
           <mat-form-field appearance="outline">
-            <input matInput placeholder="MITICA-DIECAST" formControlName="countryNameEng">
+            <input matInput placeholder="Country Name" formControlName="countryNameEng">
             <mat-error *ngIf="myGroup.get('countryNameEng')?.hasError('required')">countryNameEng required</mat-error>
           </mat-form-field>
         </div>
         
         <div>
-          <mat-label>CountryNameAmh<span class="required-field">*</span></mat-label><br/>
+          <mat-label>Country Name Amharic<span class="required-field">*</span></mat-label><br/>
           <mat-form-field appearance="outline">  
-            <input matInput placeholder="CountryNameAmh of car" formControlName="countryNameAmh">
+            <input matInput placeholder="የሀገር ስም" formControlName="countryNameAmh">
             <mat-error *ngIf="myGroup.get('countryNameAmh')?.hasError('required')">countryNameAmh is required</mat-error>
           </mat-form-field>
         </div>
@@ -42,7 +42,7 @@
         </div>
       
         <div>
-          <mat-label>countryCode<span class="required-field">*</span></mat-label><br/>
+          <mat-label>Country Code<span class="required-field">*</span></mat-label><br/>
           <mat-form-field appearance="outline">
             <input matInput placeholder="Code of car" formControlName="countryCode"> 
             <mat-error *ngIf="myGroup.get('countryCode')?.hasError('required')">countryCode is required</mat-error>                  
@@ -55,8 +55,12 @@
      
    
     </form>
+   
     </mat-card-content>
+   
   </mat-card>
+  <button class="m-3 " mat-raised-button color="primary" [disabled]="!myGroup.valid" (click)="saveVechileModel()">Save</button>        
+   
 </div>
 
 
