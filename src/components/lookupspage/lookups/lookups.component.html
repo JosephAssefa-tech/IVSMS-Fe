@@ -1,9 +1,9 @@
 <div class="flex items-center justify-center space-x-4 px-4 p-2" style="background-color: #1B7EC1;">
 
     <!-- <button mat-raised-button color="green"  >Save</button>      -->
-    <button  mat-raised-button  [disabled]="selectedTabIndex === -1" (click)="openModal()">New</button>   
+    <button  mat-raised-button   (click)="openModal()">New</button>   
     <button  mat-raised-button disabled>Print</button>
-  
+    <!-- [disabled]="selectedTabIndex === -1" -->
     <!-- <button mat-raised-button color="primary" (click)="onNoClick()">{{'Close'|translate}}</button>         -->
 
   </div>

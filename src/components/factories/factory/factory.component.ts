@@ -61,6 +61,9 @@ openDeleteConfirmationDialog(id:number)
 {
 
 }
+onNoClick(): void {
+  this.dialogRef.close(false);
+}
 loadFactories()
 {
   this.factoryService.getAll().subscribe((response: any) => {

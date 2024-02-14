@@ -64,6 +64,9 @@ private setFormValues(): void {
     });
   }
 }
+onNoClick(): void {
+  this.dialogRef.close(false);
+}
 loadServiceTypes()
 {
   this.serviceTypes.getAll().subscribe((response: any) => {

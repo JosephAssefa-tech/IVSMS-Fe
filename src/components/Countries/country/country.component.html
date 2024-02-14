@@ -59,8 +59,16 @@
     </mat-card-content>
    
   </mat-card>
-  <button class="m-3 " mat-raised-button color="primary" [disabled]="!myGroup.valid" (click)="saveVechileModel()">Save</button>        
-   
+  <div class="m-3 flex">
+    <div class="pr-10">
+      <button  mat-raised-button color="primary" [disabled]="!myGroup.valid" (click)="saveVechileModel()">Save</button>        
+  
+    </div>
+    <div>
+      <button mat-raised-button color="primary" (click)="onNoClick()">{{'Close'|translate}}</button>        
+    </div>
+  </div>
+  
 </div>
 
 

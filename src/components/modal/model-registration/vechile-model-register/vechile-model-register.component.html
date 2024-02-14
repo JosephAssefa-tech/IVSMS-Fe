@@ -1,11 +1,9 @@
 
 <div class="flex items-center justify-center space-x-4 px-4 p-2" style="background-color: #1B7EC1;">
-
-    <button mat-raised-button color="green" [disabled]="!myGroup.valid" (click)="saveVechileModel()">{{ getButtonLabel() | translate }}</button>        
-    <button mat-raised-button color="primary" (click)="onNoClick()">{{'Close'|translate}}</button>        
-
+  <h2 class="text-white text-left pt-2">Vechile Model Registration</h2>
+    
   </div>
-
+<div>
 <mat-card style="margin-left:5px; margin-right: 5px; margin-top:1rem;">
     <mat-card-content>
   <form [formGroup]="myGroup">
@@ -212,4 +210,16 @@
         </div>
     </form>
     </mat-card-content>
+
   </mat-card>
+  <div class="m-3 flex ">
+    <div class="pr-3"><button mat-raised-button color="primary" [disabled]="!myGroup.valid" (click)="saveVechileModel()">{{ getButtonLabel() | translate }}</button>        
+    </div>
+    <div>
+      <button mat-raised-button color="primary" (click)="onNoClick()">{{'Close'|translate}}</button>        
+  
+    </div>
+     
+  </div>
+
+</div>

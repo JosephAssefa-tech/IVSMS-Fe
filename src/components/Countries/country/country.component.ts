@@ -43,6 +43,9 @@ this.mode = this.modalService.getMode();
     this.setFormValues();
     this.switchToSaveMode();
 }
+onNoClick(): void {
+  this.dialogRef.close(false);
+}
 switchToSaveMode() {
   this.modalService.setMode('save');
 }

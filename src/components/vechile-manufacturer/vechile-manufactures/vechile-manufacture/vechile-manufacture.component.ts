@@ -50,6 +50,9 @@ export class VechileManufactureComponent {
 switchToSaveMode() {
   this.modalService.setMode('save');
 }
+onNoClick(): void {
+  this.dialogRef.close(false);
+}
 private setFormValues(): void {
   // Set form values based on the data for editing
   if (this.data && this.data.selectedrowData) {

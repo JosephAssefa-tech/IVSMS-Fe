@@ -71,6 +71,9 @@ loadInflations()
     console.log(this.factories)
   });
 }
+onNoClick(): void {
+  this.dialogRef.close(false);
+}
 saveVechileModel() {
   if (this.myGroup.valid) {
    console.log("Saving");
