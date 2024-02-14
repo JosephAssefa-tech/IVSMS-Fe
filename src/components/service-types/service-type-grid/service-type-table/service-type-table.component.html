@@ -1,0 +1,64 @@
+<div class="table-container">
+ 
+    <mat-table [dataSource]="dataSource">
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef>{{'id'| translate }} </mat-header-cell>
+        <mat-cell *matCellDef="let data; let i = index">{{ i + 1 }}</mat-cell>
+      </ng-container>
+      
+  
+      <ng-container matColumnDef="descriptionAmh">
+        <mat-header-cell *matHeaderCellDef>descriptionAmh</mat-header-cell>
+        <mat-cell *matCellDef="let data">{{ data.descriptionAmh }}</mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="countryNameEng">
+        <mat-header-cell *matHeaderCellDef>countryNameEng</mat-header-cell>
+        <mat-cell *matCellDef="let data">{{ data.countryNameEng  }}</mat-cell>
+      </ng-container>
+  
+  
+  
+  
+  
+      <ng-container matColumnDef="code">
+        <mat-header-cell *matHeaderCellDef>code</mat-header-cell>
+        <mat-cell *matCellDef="let data">{{ data.code }}</mat-cell>
+      </ng-container>
+  
+
+    
+      <ng-container matColumnDef="point">
+        <mat-header-cell *matHeaderCellDef>point</mat-header-cell>
+        <mat-cell *matCellDef="let data">{{ data.point }}</mat-cell>
+      </ng-container>
+   
+  
+ss
+  
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef>actions</mat-header-cell>
+        <mat-cell *matCellDef="let data" >
+        
+            <div style="margin-right: 5px;">
+              <button mat-raised-button (click)="EditVechile(data)" color="primary"><mat-icon>edit</mat-icon> </button>  
+            </div>
+            
+            <div>
+              <button mat-raised-button color="warn" (click)="openDeleteConfirmationDialog(data.id)"><mat-icon>delete</mat-icon> </button>
+            </div>
+             
+             
+         
+  
+        </mat-cell>
+      </ng-container>
+     
+      <mat-header-row style="background-color: #1B7EC1; color: #ffffff;" *matHeaderRowDef="displayedColumns"  >
+      </mat-header-row>
+    
+      <mat-row  *matRowDef="let data; columns: displayedColumns" ></mat-row>
+    </mat-table>
+    <mat-paginator  [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" (page)="onPageChange($event)"></mat-paginator>
+  </div>
+ 

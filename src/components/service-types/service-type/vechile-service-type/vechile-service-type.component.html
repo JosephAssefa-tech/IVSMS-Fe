@@ -1,0 +1,64 @@
+
+<div class="component-container">
+    <div class="flex items-center justify-center space-x-4 px-4 p-2" style="background-color: #1B7EC1;">
+  
+      <button mat-raised-button color="green" [disabled]="!myGroup.valid" (click)="saveVechileModel()">Save</button>        
+      
+     
+      <!-- <button mat-raised-button color="primary" (click)="onNoClick()">{{'Close'|translate}}</button>         -->
+  
+    </div>
+  
+  <mat-card style="margin-left:5px; margin-right: 5px; margin-top:1rem;">
+      <mat-card-content>
+    <form [formGroup]="myGroup">
+    
+      <div class="flex-container">
+        <div class="section1">
+          <div>
+            <mat-label>description Eng <span class="required-field">*</span></mat-label><br/>
+            <mat-form-field appearance="outline">
+              <input matInput placeholder="MITICA-DIECAST" formControlName="descriptionEng">
+              <mat-error *ngIf="myGroup.get('descriptionEng')?.hasError('required')">descriptionEng required</mat-error>
+            </mat-form-field>
+          </div>
+          
+          <div>
+            <mat-label>description Amh<span class="required-field">*</span></mat-label><br/>
+            <mat-form-field appearance="outline">  
+              <input matInput placeholder="CountryNameAmh of car" formControlName="descriptionAmh">
+              <mat-error *ngIf="myGroup.get('descriptionAmh')?.hasError('required')">description Amh is required</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      
+        <div class="section2">
+          <div>
+            <mat-label>Point<span class="required-field">*</span></mat-label><br/>
+            <mat-form-field appearance="outline">
+              <input matInput placeholder="point of car" formControlName="point"> 
+              <mat-error *ngIf="myGroup.get('point')?.hasError('required')">Point is required</mat-error>                  
+            </mat-form-field>
+          </div>
+        
+          <div>
+            <mat-label>code<span class="required-field">*</span></mat-label><br/>
+            <mat-form-field appearance="outline">
+              <input matInput placeholder="Code of car" formControlName="code"> 
+              <mat-error *ngIf="myGroup.get('code')?.hasError('required')">code is required</mat-error>                  
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      
+      
+       
+     
+      </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  
+  
+  
+    

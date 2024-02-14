@@ -3,6 +3,11 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { InflationService } from '../../../../services/inflation-service/inflation.service';
+import { PageEvent } from '@angular/material/paginator';
+import { DeleteConfirmationDeialogComponent } from '../../../modal/delete-confirmation-deialog/delete-confirmation-deialog.component';
+import { MatDialog } from '@angular/material/dialog';
+import { ModalServiceService } from '../../../../services/modal/modal-service.service';
+import { InflationComponent } from '../../inflation/inflation.component';
 
 @Component({
   selector: 'app-inflation-table',
@@ -14,13 +19,13 @@ export class InflationTableComponent {
   displayedColumns: string[] = ['id', 'serviceYear', 'point','actions'];
   factories: any[] = [];
   dataSource = new MatTableDataSource<any>();
-  constructor(   private snackBar: MatSnackBar,private inflationService:InflationService, private formBuilder: FormBuilder)
+  constructor(private dialog: MatDialog,private modalService: ModalServiceService,   private snackBar: MatSnackBar,private inflationService:InflationService, private formBuilder: FormBuilder)
   {
     
   }
   ngOnInit(): void {
  
-  
+    this.switchToSaveMode();
     this.myGroup = this.formBuilder.group({
       serviceYear: ['', Validators.required],
       point: ['', Validators.required],
@@ -29,13 +34,60 @@ export class InflationTableComponent {
 
     this.loadInflations();
 }
-EditVechile(selectedrowData: any, mode: 'edit' | 'save' = 'edit') {
+switchToSaveMode() {
+  console.log("Setting mode to 'edit'");
+  this.modalService.setMode('edit');
+  const currentMode = this.modalService.getMode();
+console.log(`Current mode is '${currentMode}'`);
 
+}
+EditVechile(selectedrowData: any) {
 
+  this.modalService.setMode('edit');
+
+  const dialogRef = this.dialog.open(InflationComponent, {
+    width: 'auto',
+    // Pass the correct mode value retrieved from the service
+    data: { mode: this.modalService.getMode(), selectedrowData, id: selectedrowData.id, countryNameEng: selectedrowData.countryNameEng },
+  });
+
+  dialogRef.afterClosed().subscribe((result) => {
+    if (result === true) {
+  
+    }
+
+  });
 }
 openDeleteConfirmationDialog(id:number)
 {
+  console.log(id)
 
+this.openDeleteConfirmationDialg(id);
+}
+openDeleteConfirmationDialg(id: number): void {
+  const dialogRef = this.dialog.open(DeleteConfirmationDeialogComponent, {
+    width: '350px',
+  });
+
+  dialogRef.afterClosed().subscribe((result) => {
+    if (result === true) {
+      // User clicked on 'Yes', perform delete action
+      this.inflationService.deletre(id).subscribe(
+        (response) => {
+          console.error('Deleted successfully');
+
+          // Update dataSource by removing the deleted item
+          this.dataSource.data = this.dataSource.data.filter(
+            (item) => item.id !== id
+          );
+        },
+        (error) => {
+          console.error('Error deleting:', error);
+        }
+      );
+    }
+    // Handle 'No' or close actions if needed
+  });
 }
 loadInflations()
 {
@@ -44,6 +96,11 @@ loadInflations()
     console.log(this.factories)
   });
 }
+  // Handle pagination event
+  onPageChange(event: PageEvent): void {
+    // You can add logic here if needed
+    console.log(event);
+  }
 saveVechileModel() {
   if (this.myGroup.valid) {
    console.log("Saving");

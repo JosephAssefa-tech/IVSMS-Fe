@@ -41,6 +41,10 @@ import { CountryTableComponent } from '../components/Countries/country-grid/coun
 import { DeperciationTableComponent } from '../components/Depreciation/deperciation-grid/deperciation-table/deperciation-table.component';
 import { FactoriesTableComponent } from '../components/factories/factories-grid/factories-table/factories-table.component';
 import { InflationTableComponent } from '../components/Inflation/inflation-grid/inflation-table/inflation-table.component';
+import { ServiceTypeTableComponent } from '../components/service-types/service-type-grid/service-type-table/service-type-table.component';
+import { VechileServiceTypeComponent } from '../components/service-types/service-type/vechile-service-type/vechile-service-type.component';
+import { VechileManufactureTableComponent } from '../components/vechile-manufacturer/vechile-manufacturer-grid/vechile-manufacture-table/vechile-manufacture-table.component';
+import { VechileManufactureComponent } from '../components/vechile-manufacturer/vechile-manufactures/vechile-manufacture/vechile-manufacture.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -59,11 +63,16 @@ export function HttpLoaderFactory(http: HttpClient) {
     DepreciationComponent,
     InflationComponent,
     CountryComponent,
+    VechileServiceTypeComponent,
     CountryTableComponent,
     DeperciationTableComponent,
     FactoriesTableComponent,
     InflationTableComponent,
-    CountryTableComponent
+    CountryTableComponent,
+    ServiceTypeTableComponent,
+    VechileManufactureComponent,
+    VechileManufactureTableComponent
+
   ],
   imports: [
     BrowserModule,

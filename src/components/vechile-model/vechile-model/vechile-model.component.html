@@ -200,9 +200,13 @@
     <ng-container matColumnDef="actions">
       <mat-header-cell *matHeaderCellDef>{{'actions'| translate }}</mat-header-cell>
       <mat-cell *matCellDef="let data">
-        <button mat-raised-button (click)="EditVechile(data,'edit')" color="primary">{{'Edit'| translate }}</button>  
-        <button mat-raised-button color="warn" (click)="openDeleteConfirmationDialog(data.id)">{{'Delete'| translate }}</button>
-  
+        <div style="margin-right: 5px;">
+          <button mat-raised-button (click)="EditVechile(data)" color="primary"><mat-icon>edit</mat-icon> </button>  
+        </div>
+        
+        <div>
+          <button mat-raised-button color="warn" (click)="openDeleteConfirmationDialog(data.id)"><mat-icon>delete</mat-icon> </button>
+        </div>
 
       </mat-cell>
     </ng-container>

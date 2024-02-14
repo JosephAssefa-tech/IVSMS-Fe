@@ -7,9 +7,14 @@
       </ng-container>
       
   
-      <ng-container matColumnDef="serviceYear">
-        <mat-header-cell *matHeaderCellDef>serviceYear</mat-header-cell>
-        <mat-cell *matCellDef="let data">{{ data.serviceYear }}</mat-cell>
+      <ng-container matColumnDef="factoryId">
+        <mat-header-cell *matHeaderCellDef>Factory</mat-header-cell>
+        <mat-cell *matCellDef="let data">{{ data.factory.factoryNameAmh }}</mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="vehicleServiceTypeId">
+        <mat-header-cell *matHeaderCellDef>vehicle Service Type</mat-header-cell>
+        <mat-cell *matCellDef="let data">{{ data.vehicleServiceType.descriptionAmh }}</mat-cell>
       </ng-container>
   
       <ng-container matColumnDef="point">
@@ -18,9 +23,7 @@
       </ng-container>
   
   
-  
-  
-  
+      
  
 
   
@@ -31,13 +34,13 @@
       <ng-container matColumnDef="actions">
         <mat-header-cell *matHeaderCellDef>actions</mat-header-cell>
         <mat-cell *matCellDef="let data">
-          <div style="margin-right: 5px;">
-            <button mat-raised-button (click)="EditVechile(data)" color="primary"><mat-icon>edit</mat-icon> </button>  
-          </div>
-          
-          <div>
-            <button mat-raised-button color="warn" (click)="openDeleteConfirmationDialog(data.id)"><mat-icon>delete</mat-icon> </button>
-          </div>
+            <div style="margin-right: 5px;">
+                <button mat-raised-button (click)="EditVechile(data)" color="primary"><mat-icon>edit</mat-icon> </button>  
+              </div>
+              
+              <div>
+                <button mat-raised-button color="warn" (click)="openDeleteConfirmationDialog(data.id)"><mat-icon>delete</mat-icon> </button>
+              </div>
   
         </mat-cell>
       </ng-container>
@@ -50,4 +53,3 @@
     <mat-paginator  [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" (page)="onPageChange($event)"></mat-paginator>
 
   </div>
-   

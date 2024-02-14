@@ -1,45 +1,49 @@
 import { Component, Inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { VechileServiceService } from '../../../../services/vechile-service-type/vechile-service.service';
+import { FactoryService } from '../../../../services/factory-service/factory.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
-import { CountryService } from '../../../services/country-service/country.service';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { ModalServiceService } from '../../../services/modal/modal-service.service';
+import { ModalServiceService } from '../../../../services/modal/modal-service.service';
+import { VechileManufactureService } from '../../../../services/vechile-manufacture/vechile-manufacture.service';
+import { DepreciationComponent } from '../../../Depreciation/depreciation/depreciation.component';
 
 @Component({
-  selector: 'app-country',
-  templateUrl: './country.component.html',
-  styleUrl: './country.component.css'
+  selector: 'app-vechile-manufacture',
+  templateUrl: './vechile-manufacture.component.html',
+  styleUrl: './vechile-manufacture.component.css'
 })
-export class CountryComponent {
+export class VechileManufactureComponent {
   mode: 'edit' | 'save' | undefined;
   myGroup!: FormGroup; // Add the definite assignment assertion here
-  displayedColumns: string[] = ['id', 'countryNameAmh', 'countryNameEng','countryCode','point','actions'];
+  //displayedColumns: string[] = ['id', 'vehicleServiceTypeId', 'serviceYear','point','actions'];
+  //deperciations: any[] = [];
   factories: any[] = [];
+  vehicleServiceTypes: any[] = [];
   dataSource = new MatTableDataSource<any>();
   selectedRowData: any;
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: { mode: 'edit' | 'save'; selectedrowData: any; id?: number ;countryNameEng ?:string} = { mode: 'edit', selectedrowData: null },
-    public dialogRef: MatDialogRef<CountryComponent>,
-    private countryService: CountryService, private modalService: ModalServiceService,  private snackBar: MatSnackBar, private formBuilder: FormBuilder)
+    @Inject(MAT_DIALOG_DATA) public data: { mode: 'edit' | 'save'; selectedrowData: any; id?: number ;descriptionAmh ?:string} = { mode: 'edit', selectedrowData: null },
+    public dialogRef: MatDialogRef<VechileManufactureComponent>, 
+    public serviceTypes:VechileServiceService, private modalService: ModalServiceService, private snackBar: MatSnackBar,private vechileManufacturerService:VechileManufactureService, private factoryService:FactoryService,private formBuilder: FormBuilder)
   {
     
   }
   ngOnInit(): void {
-
  
   
     this.myGroup = this.formBuilder.group({
-      countryNameEng: ['', Validators.required],
-      countryNameAmh: ['', Validators.required],
+      vehicleServiceTypeId: ['', Validators.required],
+      factoryId: ['', Validators.required],
       point: ['', Validators.required],
-      countryCode: ['', Validators.required],
+      
+   
     });
-
-
-this.mode = this.modalService.getMode();
-
-    this.Countries();
+    this.mode = this.modalService.getMode();
+    this.loadFactories();
+    this.loadvehicleServiceTypes();
+    //this.loadVechileServiceTypes();
     this.setFormValues();
     this.switchToSaveMode();
 }
@@ -53,25 +57,17 @@ private setFormValues(): void {
     const rowData = this.data.selectedrowData;
 
     this.myGroup.setValue({
-      countryNameEng: rowData.countryNameEng || '',
-      countryNameAmh: rowData.countryNameAmh || '',
-      point:rowData.point || '',
-      countryCode:rowData.countryCode || '',
 
+      vehicleServiceTypeId: rowData.vehicleServiceType.id || '',
+     factoryId:rowData.factory.id || '',
+      point:rowData.point || '',
+      
     });
   }
 }
-Countries()
-{
-  this.countryService.getAll().subscribe((response: any) => {
-    this.dataSource = response.data;
-    console.log(this.factories)
-  });
 
-}
 
-UpdateCountries()
-{}
+
 EditVechile(selectedrowData: any, mode: 'edit' | 'save' = 'edit') {
 
 
@@ -80,14 +76,29 @@ openDeleteConfirmationDialog(id:number)
 {
 
 }
+loadFactories()
+{
+ 
+  this.factoryService.getAll().subscribe((response: any) => {
+    
+    this.factories = response.data;
+    console.log("this.factories");
+   console.log(this.factories);
+  });
+}
+loadvehicleServiceTypes()
+{
+  this.serviceTypes.getAll().subscribe((response: any) => {
+    this.vehicleServiceTypes = response.data;
+   // this.deperciations = response.data;
+   // console.log(this.vechileServiceTypes)
+  });
+}
 saveVechileModel() {
   if (this.myGroup.valid) {
- 
- //   // Get the form values
-    const formData = this.myGroup.value;
-let dat= this.modalService.getMode();
 
-   if (this.mode === 'edit') {
+    const formData = this.myGroup.value;
+    if (this.mode === 'edit') {
    
 
      // Include the 'id' property in the formData
@@ -98,7 +109,7 @@ let dat= this.modalService.getMode();
      const editedData = { ...this.selectedRowData, ...formData };
 
      // Call your service's update method to update the data
-     this.countryService.update(editedData).subscribe(
+     this.vechileManufacturerService.update(editedData).subscribe(
        (response: any) => {
          //this.onAddDataSuccess();
          // Handle success, e.g., show a success notification
@@ -122,11 +133,11 @@ let dat= this.modalService.getMode();
      // Clear selectedRowData after updating
      this.myGroup.reset();
      this.selectedRowData = null;
-   } else{
+   } else {
      console.log("posting");
      // Adding a new record
      // Call your service's post method to save the new data
-     this.countryService.post(formData).subscribe(
+     this.vechileManufacturerService.post(formData).subscribe(
        (response: any) => {
          
          // Handle success, e.g., show a success notification
@@ -150,8 +161,8 @@ let dat= this.modalService.getMode();
      );
    }
  } else {
-   // Handle invalid form, e.g., show an error notification
-   console.error('Invalid form data');
-  }
-}
-}
+  // Handle invalid form, e.g., show an error notification
+  console.error('Invalid form data');
+  } 
+
+}}

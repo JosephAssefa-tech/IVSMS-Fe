@@ -1,0 +1,7 @@
+.component-container{
+    width: 720px; /* Adjust the width as needed */
+}
+.required-field {
+  
+    @apply ml-1 text-red-600;
+  }

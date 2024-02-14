@@ -34,11 +34,13 @@
       <ng-container matColumnDef="actions">
         <mat-header-cell *matHeaderCellDef>actions</mat-header-cell>
         <mat-cell *matCellDef="let data">
-          <button mat-raised-button (click)="EditVechile(data,'edit')" color="primary">Edit </button>  
-         
-         
-          <button mat-raised-button color="warn" (click)="openDeleteConfirmationDialog(data.id)">Delete </button>
-    
+          <div style="margin-right: 5px;">
+            <button mat-raised-button (click)="EditVechile(data)" color="primary"><mat-icon>edit</mat-icon> </button>  
+          </div>
+          
+          <div>
+            <button mat-raised-button color="warn" (click)="openDeleteConfirmationDialog(data.id)"><mat-icon>delete</mat-icon> </button>
+          </div>
   
         </mat-cell>
       </ng-container>
@@ -48,9 +50,6 @@
     
       <mat-row  *matRowDef="let data; columns: displayedColumns" ></mat-row>
     </mat-table>
+    <mat-paginator  [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" (page)="onPageChange($event)"></mat-paginator>
+
   </div>
-    <mat-paginator [length]="100"
-                [pageSize]="10"
-                [pageSizeOptions]="[5, 10, 25, 100]"
-                aria-label="Select page">
-  </mat-paginator>

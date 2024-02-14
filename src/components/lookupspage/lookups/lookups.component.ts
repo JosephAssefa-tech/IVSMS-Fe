@@ -7,6 +7,8 @@ import { InflationComponent } from '../../Inflation/inflation/inflation.componen
 import { CountryTableComponent } from '../../Countries/country-grid/country-table/country-table.component';
 import { FactoriesTableComponent } from '../../factories/factories-grid/factories-table/factories-table.component';
 import { CountryService } from '../../../services/country-service/country.service';
+import { VechileServiceTypeComponent } from '../../service-types/service-type/vechile-service-type/vechile-service-type.component';
+import { VechileManufactureComponent } from '../../vechile-manufacturer/vechile-manufactures/vechile-manufacture/vechile-manufacture.component';
 
 @Component({
   selector: 'app-lookups',
@@ -43,8 +45,16 @@ export class LookupsComponent {
         this.toggleForm(InflationComponent);
         break;
       case 4:
-      
+        this.modalService.setMode('save');
+        this.toggleForm(VechileServiceTypeComponent);
+        break;
+     case 5:
+          this.modalService.setMode('save');
+          this.toggleForm(VechileManufactureComponent);
+          break;
       default:
+        this.modalService.setMode('save');
+        this.toggleForm(CountryComponent);
         break;
     }
   }

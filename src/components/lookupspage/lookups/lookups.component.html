@@ -9,10 +9,10 @@
   </div>
 
 
-  <div class="bg-gray-200 hover:bg-red-200 rounded-md overflow-hidden">
-    <mat-tab-group (selectedIndexChange)="tabChanged($event)">
+  <div class="p-2">
+    <mat-tab-group  (selectedIndexChange)="tabChanged($event)">
     
-      <mat-tab label="Country of make">
+      <mat-tab label="Country of make" style="border-right: 1px solid red;">
         <ng-template matTabContent>
           <app-country-table></app-country-table>
         </ng-template>
@@ -34,7 +34,12 @@
       </mat-tab>
       <mat-tab label="Service Type">
         <ng-template matTabContent>
-          <!-- <app-service-type></app-service-type> -->
+          <app-service-type-table></app-service-type-table>
+        </ng-template>
+      </mat-tab>
+      <mat-tab label="Vehicle Manufacturer">
+        <ng-template matTabContent>
+          <app-vechile-manufacture-table></app-vechile-manufacture-table>
         </ng-template>
       </mat-tab>
     </mat-tab-group>

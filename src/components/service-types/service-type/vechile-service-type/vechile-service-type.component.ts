@@ -1,27 +1,27 @@
 import { Component, Inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { VechileServiceService } from '../../../../services/vechile-service-type/vechile-service.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
-import { CountryService } from '../../../services/country-service/country.service';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { ModalServiceService } from '../../../services/modal/modal-service.service';
+import { ModalServiceService } from '../../../../services/modal/modal-service.service';
 
 @Component({
-  selector: 'app-country',
-  templateUrl: './country.component.html',
-  styleUrl: './country.component.css'
+  selector: 'app-vechile-service-type',
+  templateUrl: './vechile-service-type.component.html',
+  styleUrl: './vechile-service-type.component.css'
 })
-export class CountryComponent {
+export class VechileServiceTypeComponent {
   mode: 'edit' | 'save' | undefined;
   myGroup!: FormGroup; // Add the definite assignment assertion here
-  displayedColumns: string[] = ['id', 'countryNameAmh', 'countryNameEng','countryCode','point','actions'];
+  displayedColumns: string[] = ['id', 'descriptionAmh', 'code','point','actions'];
   factories: any[] = [];
   dataSource = new MatTableDataSource<any>();
   selectedRowData: any;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { mode: 'edit' | 'save'; selectedrowData: any; id?: number ;countryNameEng ?:string} = { mode: 'edit', selectedrowData: null },
-    public dialogRef: MatDialogRef<CountryComponent>,
-    private countryService: CountryService, private modalService: ModalServiceService,  private snackBar: MatSnackBar, private formBuilder: FormBuilder)
+    public dialogRef: MatDialogRef<VechileServiceTypeComponent>,
+    private vechileService: VechileServiceService, private modalService: ModalServiceService,  private snackBar: MatSnackBar, private formBuilder: FormBuilder)
   {
     
   }
@@ -30,16 +30,16 @@ export class CountryComponent {
  
   
     this.myGroup = this.formBuilder.group({
-      countryNameEng: ['', Validators.required],
-      countryNameAmh: ['', Validators.required],
+      descriptionEng: ['', Validators.required],
+      descriptionAmh: ['', Validators.required],
       point: ['', Validators.required],
-      countryCode: ['', Validators.required],
+      code: ['', Validators.required],
     });
 
 
 this.mode = this.modalService.getMode();
 
-    this.Countries();
+    //this.ServiceTypes();
     this.setFormValues();
     this.switchToSaveMode();
 }
@@ -53,22 +53,22 @@ private setFormValues(): void {
     const rowData = this.data.selectedrowData;
 
     this.myGroup.setValue({
-      countryNameEng: rowData.countryNameEng || '',
-      countryNameAmh: rowData.countryNameAmh || '',
+      descriptionEng: rowData.descriptionEng || '',
+      descriptionAmh: rowData.descriptionAmh || '',
       point:rowData.point || '',
-      countryCode:rowData.countryCode || '',
+      code:rowData.code || '',
 
     });
   }
 }
-Countries()
-{
-  this.countryService.getAll().subscribe((response: any) => {
-    this.dataSource = response.data;
-    console.log(this.factories)
-  });
+// Countries()
+// {
+//   this.countryService.getAll().subscribe((response: any) => {
+//     this.dataSource = response.data;
+//     console.log(this.factories)
+//   });
 
-}
+// }
 
 UpdateCountries()
 {}
@@ -98,7 +98,7 @@ let dat= this.modalService.getMode();
      const editedData = { ...this.selectedRowData, ...formData };
 
      // Call your service's update method to update the data
-     this.countryService.update(editedData).subscribe(
+     this.vechileService.update(editedData).subscribe(
        (response: any) => {
          //this.onAddDataSuccess();
          // Handle success, e.g., show a success notification
@@ -126,7 +126,7 @@ let dat= this.modalService.getMode();
      console.log("posting");
      // Adding a new record
      // Call your service's post method to save the new data
-     this.countryService.post(formData).subscribe(
+     this.vechileService.post(formData).subscribe(
        (response: any) => {
          
          // Handle success, e.g., show a success notification
